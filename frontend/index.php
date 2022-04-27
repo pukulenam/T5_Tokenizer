@@ -1,9 +1,3 @@
-<?php
-include($_SERVER['DOCUMENT_ROOT'] . '/T5_Tokenizer' . '/assets/php/Appointment.php');
-
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 

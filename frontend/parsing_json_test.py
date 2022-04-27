@@ -1,7 +1,7 @@
 import json
 
 # Specify the json file path first !
-path = ''
+path = var
 
 # Adding new json dict
 add_sum = {'Summerize': 'Lorem'}

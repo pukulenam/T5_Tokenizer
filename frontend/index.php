@@ -30,8 +30,9 @@ include 'header.php';
                         <div class="col">
                           <h5 class="card-title">Input News</h5>
                         </div>
-                        <div class="col d-flex align-items-center justify-content-end">
-                          <button type="button" id="addBlokBtn" class="btn btn-primary btn-sm"><b>Send</b><i class="bi bi-plus"></i></button>
+                        <div class="col d-flex align-items-center justify-content-end gap-2">
+                        <button type="button" id="pasteBtn" class="btn btn-dark btn-sm"><b>Paste</b></i></button>  
+                        <button type="button" id="submitBtn" class="btn btn-primary btn-sm"><b>Send</b><i class="bi bi-plus"></i></button>
                         </div>
                       </div>
                       <div class="fade show" id="alertMessage" role="alert"></div>
@@ -46,7 +47,7 @@ include 'header.php';
                           <div class="accordion-item">
                             <h2 class="accordion-header" id="accordConfHead">
                               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseConf" aria-expanded="false" aria-controls="collapseConf">
-                                <b>Settings</b>
+                                <b>Settings</b>&nbsp<i>(Default)</i>
                               </button>
                             </h2>
                             <div id="collapseConf" class="accordion-collapse collapse" aria-labelledby="accordConfHead" data-bs-parent="#accordConf">
@@ -56,7 +57,7 @@ include 'header.php';
                                     <div>
                                       <input class="form-check-input" type="radio" id="t1" name="t" value="satu" checked>
                                       <label class="form-check-label" for="t1">
-                                        Template 1
+                                        Default
                                       </label>
                                     </div>
                                     <div>
@@ -144,16 +145,28 @@ include 'header.php';
                           </div>
                         </div>
                       </div>
+                      <div class="col-12 mt-3 ps-3 pe-3 d-flex justify-content-between">
+                      <h6>Session ID : HH883h8hd</h6>
+                      <h6>IP Address : 000.000.000.000</h6>
+                      <h6>Last Request ID : 8J8W8DHW</h6>
+                      </div>
                     </div>
                   </div>
                 </form>
                 <div class="card">
                   <div class="card-body">
-                    <h5 class="card-title">Summarized News</h5>
+                  <div class="row">
+                        <div class="col">
+                          <h5 class="card-title">Summarized News</h5>
+                        </div>
+                        <div class="col d-flex align-items-center justify-content-end gap-2">
+                        <button type="button" id="pasteBtn" class="btn btn-dark btn-sm"><b>Copy</b></i></button>
+                        </div>
+                      </div>
                     <div class="col-12">
                       <div class="form-floating">
-                        <textarea rows="6" class="form-control" placeholder="Input Long Text" name="lt" id="longText" style="height: 100px;"></textarea>
-                        <label for="longText">Summarized</label>
+                        <textarea rows="6" class="form-control" id="sumText" style="height: 100px;"></textarea>
+                        <label for="sumText">Summarized</label>
                       </div>
                     </div>
                   </div>

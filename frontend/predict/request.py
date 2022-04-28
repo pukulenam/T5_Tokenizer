@@ -2,7 +2,7 @@ import requests
 import json
 
 import json
-with open('parse.json') as f:
+with open('../json/parse.json') as f:
     data = json.load(f)
 
 API_URL = "https://api-inference.huggingface.co/models/csebuetnlp/mT5_multilingual_XLSum"
@@ -22,5 +22,5 @@ a_dict = {'summarize': 'Intinya... ' + output[0]['summary_text']}
 
 data.update(a_dict)
 
-with open('parse.json', 'w') as f:
+with open('../json/parse.json', 'w') as f:
     json.dump(data, f)

@@ -214,9 +214,9 @@ include 'header.php';
           var1 = var2 = var3 = 2.5;
         }
 
-        document.getElementById("varOneVal").value = var1;
-        document.getElementById("varOneVal").value = var1;
-        document.getElementById("varOneVal").value = var1;
+        document.getElementById("varOneVal").innerHTML = var1;
+        document.getElementById("varOneVal").innerHTML = var1;
+        document.getElementById("varOneVal").innerHTML = var1;
         timeout();
     }, 200);
   }  

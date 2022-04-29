@@ -41,10 +41,10 @@ document.getElementById("cbX").checked = (getCookie("cek1") === 'true');
 document.getElementById("cbY").checked = (getCookie("cek2") === 'true');
 document.getElementById("cbYN").checked = (getCookie("cek3") === 'true');
 
-$(document).ready(function() {
-  $(document).on('change', '.var', function() {
+$(document).ready(function () {
+  $(document).on("change", ".var-slide", function () {
     console.log($(this).val());
-    $('#' + $(this).data('id')).html($(this).val());
+    $("#" + $(this).data("id")).html($(this).val());
   });
 });
 

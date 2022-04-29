@@ -15,6 +15,7 @@ $(document).ready(function () {
         tmplS = tmpl.value.split(",");
         setAllConf(tmplS[0], tmplS[1], tmplS[2], tmplS[3], tmplS[4], tmplS[5]);
       }
+      setCurConf (document.querySelector('label[for="'+tmpl.getAttribute("id")+'"]').innerHTML);
     })
   );
 
@@ -79,6 +80,11 @@ $(document).ready(function () {
   //End On Load Functions
 
   //Start Functions Set
+
+  function setCurConf (val){
+    document.getElementById("curConf").innerHTML = val;
+  }
+
   function setSliderVal(target, val) {
     document.getElementById(target).value = val;
     document.getElementById(target + "Val").innerHTML = val;
@@ -89,7 +95,6 @@ $(document).ready(function () {
   }
 
   function checkCookie() {
-    console.log("Checking");
     if (typeof getCookie("tmpl") != "undefined") {
       setAllConf(
         getCookie("varOne"),

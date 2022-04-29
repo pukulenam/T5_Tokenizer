@@ -41,7 +41,7 @@ include 'header.php';
                     <div class="accordion-item">
                       <h2 class="accordion-header" id="accordConfHead">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseConf" aria-expanded="false" aria-controls="collapseConf">
-                          <b>Settings</b>&nbsp<i id="curConf">(Default)</i>
+                          <b>Settings</b>&nbsp<i>(<span id="curConf">Default</span>)</i>
                         </button>
                       </h2>
                       <div id="collapseConf" class="accordion-collapse collapse" aria-labelledby="accordConfHead" data-bs-parent="#accordConf">
@@ -50,33 +50,23 @@ include 'header.php';
                           <div class="gap-2">
                             <div class="form-check form-check-inline">
                               <input class="form-check-input var tmpl" type="radio" id="t1" name="tmpl" value="1,0.5,2,true,true,">
-                              <label class="form-check-label text-md-start" for="t1">
-                                Default
-                              </label>
+                              <label class="form-check-label text-md-start" for="t1">Default</label>
                             </div>
                             <div class="form-check form-check-inline">
                               <input class="form-check-input var tmpl" type="radio" id="t2" name="tmpl" value="2,1,1.5,,true,">
-                              <label class="form-check-label text-md-start" for="t2">
-                                Template 2
-                              </label>
+                              <label class="form-check-label text-md-start" for="t2">Template 2</label>
                             </div>
                             <div class="form-check form-check-inline">
                               <input class="form-check-input var tmpl" type="radio" id="t3" name="tmpl" value="3,2,1.5,,true,">
-                              <label class="form-check-label text-md-start" for="t3">
-                                Template 3
-                              </label>
+                              <label class="form-check-label text-md-start" for="t3">Template 3</label>
                             </div>
                             <div class="form-check form-check-inline">
                               <input class="form-check-input var tmpl" type="radio" id="t4" name="tmpl" value="4,1,0.5,true,,true">
-                              <label class="form-check-label text-md-start" for="t4">
-                                Template 4
-                              </label>
+                              <label class="form-check-label text-md-start" for="t4">Template 4</label>
                             </div>
                             <div class="form-check form-check-inline">
                               <input class="form-check-input var tmpl" type="radio" id="tc" name="tmpl" value="custom">
-                              <label class="form-check-label text-md-start" for="tc">
-                                Custom
-                              </label>
+                              <label class="form-check-label text-md-start" for="tc">Custom</label>
                             </div>
                           </div>
                           </div>

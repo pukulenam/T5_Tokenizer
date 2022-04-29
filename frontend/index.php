@@ -3,6 +3,7 @@
 
 <?php
 include 'header.php';
+include 'testip.php';
 ?>
 
 <body>
@@ -143,7 +144,7 @@ include 'header.php';
                   </div>
                   <div class="col-12 mt-3 ps-3 pe-3 d-flex justify-content-between">
                     <h6>Session ID : HH883h8hd</h6>
-                    <h6>IP Address : 000.000.000.000</h6>
+                    <h6>IP Address : <?php echo get_client_ip(); ?></h6>
                     <h6>Last Request ID : 8J8W8DHW</h6>
                   </div>
                 </div>

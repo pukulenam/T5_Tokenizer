@@ -48,7 +48,6 @@ $(document).ready(function () {
   });
 });
 
-
 function _var1(){
   document.getElementById('tc').checked = true;
   var1 = document.getElementById("varOne").value;
@@ -62,6 +61,10 @@ function _var2(){
 function _var3(){
   document.getElementById('tc').checked = true;
   var3 = document.getElementById("varThree").value;
+}
+
+function cb_trigger(){
+  document.getElementById('tc').checked = true;
 }
 
 function getradio(_text){

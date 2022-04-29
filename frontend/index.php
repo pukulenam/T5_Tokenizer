@@ -104,15 +104,15 @@ include 'header.php';
                               <ul class="list-group">
                                 <li class="list-group-item d-flex justify-content-around">
                                   Enable X
-                                  <input class="form-check-input me-1" name="cbx" id="cbX" type="checkbox" value="X" aria-label="...">
+                                  <input class="form-check-input me-1" name="cbx" id="cbX" onclick="cb_trigger();" type="checkbox" value="X" aria-label="...">
                                 </li>
                                 <li class="list-group-item d-flex justify-content-around">
                                   Enable Y
-                                  <input class="form-check-input me-1" name="cby" id="cbY" type="checkbox" value="Y" aria-label="...">
+                                  <input class="form-check-input me-1" name="cby" id="cbY" onclick="cb_trigger();" type="checkbox" value="Y" aria-label="...">
                                 </li>
                                 <li class="list-group-item d-flex justify-content-around">
                                   Yes/No
-                                  <input class="form-check-input me-1" name="cbyn" id="cbYN" type="checkbox" value="Yes" aria-label="...">
+                                  <input class="form-check-input me-1" name="cbyn" id="cbYN" onclick="cb_trigger();" type="checkbox" value="Yes" aria-label="...">
                                 </li>
                               </ul>
                             </div>

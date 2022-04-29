@@ -189,6 +189,37 @@ include 'header.php';
   var var3;
   timeout();
 
+  function setCookie(cname, cvalue, exdays) {
+  const d = new Date();
+  d.setTime(d.getTime() + (exdays*24*60*60*1000));
+  let expires = "expires="+ d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+  }
+
+  function getCookie(cname) {
+  let name = cname + "=";
+  let ca = document.cookie.split(';');
+  for(let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+  }
+  
+  if(getCookie("var1") != "undefined"){
+    document.getElementById("varOneVal").innerHTML = getCookie("var1");
+    document.getElementById("varTwoVal").innerHTML = getCookie("var2");
+    document.getElementById("varThreeVal").innerHTML = getCookie("var3");
+    document.getElementById("varOne").value = getCookie("var1");
+    document.getElementById("varTwo").value = getCookie("var2");
+    document.getElementById("varThree").value = getCookie("var3");
+  }
+
   $(document).ready(function() {
     $(document).on('change', '.var', function() {
       console.log($(this).val());
@@ -217,6 +248,11 @@ include 'header.php';
         document.getElementById("varOneVal").innerHTML = var1;
         document.getElementById("varTwoVal").innerHTML = var2;
         document.getElementById("varThreeVal").innerHTML = var3;
+
+        setCookie("var1",var1,1);
+        setCookie("var2",var2,1);
+        setCookie("var3",var3,1);
+
         timeout();
     }, 50);
   }  

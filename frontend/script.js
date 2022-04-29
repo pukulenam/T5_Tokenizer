@@ -63,6 +63,11 @@ function _var3(){
 function timeout() {
   setTimeout(function () {
       if(typeof var1 == "undefined"){
+        if(typeof getCookie("var1") == "undefined") {
+          setCookie("var1",2.5,1);
+          setCookie("var2",2.5,1);
+          setCookie("var3",2.5,1);
+        }
         var1 = getCookie("var1");
         var2 = getCookie("var2");
         var3 = getCookie("var3");

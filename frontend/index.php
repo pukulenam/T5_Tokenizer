@@ -85,17 +85,17 @@ include 'header.php';
                               <ul class="list-group">
                                 <li class="list-group-item d-flex align-items-center justify-content-between d-grid gap-1">
                                   <label class="text-sm-start">Var 1</label>
-                                  <input type="range" name="varone" id="varOne" data-id="varOneVal" class="form-range w-75 var-slide" min="0" max="5" step="0.5" value="" id="varone">
+                                  <input type="range" name="varone" id="varOne" data-id="varOneVal" oninput="_var1();" class="form-range w-75 var-slide" min="0" max="5" step="0.5" value="" id="varone">
                                   <span class="badge bg-primary rounded-pill" id="varOneVal">0</span>
                                 </li>
                                 <li class="list-group-item d-flex align-items-center justify-content-between d-grid gap-1">
                                   <label class="text-sm-start">Var 1</label>
-                                  <input type="range" name="vartwo" id="varTwo" data-id="varTwoVal" class="form-range w-75 var-slide" min="0" max="5" step="0.5" value="" id="varone">
+                                  <input type="range" name="vartwo" id="varTwo" data-id="varTwoVal" oninput="_var2();" class="form-range w-75 var-slide" min="0" max="5" step="0.5" value="" id="varone">
                                   <span class="badge bg-primary rounded-pill" id="varTwoVal">0</span>
                                 </li>
                                 <li class="list-group-item d-flex align-items-center justify-content-between d-grid gap-1">
                                   <label class="text-sm-start">Var 3</label>
-                                  <input type="range" name="varthree" id="varThree" data-id="varThreeVal" class="form-range w-75 var-slide" min="0" max="5" step="0.5" value="" id="varone">
+                                  <input type="range" name="varthree" id="varThree" data-id="varThreeVal" oninput="_var3();" class="form-range w-75 var-slide" min="0" max="5" step="0.5" value="" id="varone">
                                   <span class="badge bg-primary rounded-pill" id="varThreeVal">0</span>
                                 </li>
                               </ul>

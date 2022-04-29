@@ -150,10 +150,10 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 @media (max-width: 1200px) {
-  .col-7 {
+  .col-7m {
     width: 100% !important;
   }
-  .col-5 {
+  .col-5m {
     width: 100% !important;
   }
 }

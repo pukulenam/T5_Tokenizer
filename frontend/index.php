@@ -18,7 +18,7 @@ include 'header.php';
             </a>
           </div><!-- End Logo -->
           <div class="row row-cols-2">
-          <div class="col-7">
+          <div class="col-7 col-7m">
             <form method="POST" class="g-2 needs-validation" id="officeLogin" novalidate>
               <div class="card">
                 <div class="card-body">
@@ -150,7 +150,7 @@ include 'header.php';
               </div>
             </form>
           </div>
-          <div class="col-5">
+          <div class="col-5 col-5m">
             <div class="card">
               <div class="card-body">
                 <div class="row">

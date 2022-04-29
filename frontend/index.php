@@ -9,7 +9,7 @@ include 'header.php';
 
   <main>
     <section class="section d-flex flex-column align-items-center justify-content-center py-4">
-      <div class="col-lg-11">
+      <div class="d-none col-lg-11">
         
           <div class="d-flex justify-content-center py-4">
             <a href="#" class="logo d-flex align-items-center w-auto">

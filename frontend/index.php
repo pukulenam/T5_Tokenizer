@@ -25,14 +25,14 @@ include 'header.php';
                 <div class="d-flex justify-content-between align-items-center">
                   <h5 class="card-title">Input News</h5>
                   <div class="gap-2">
-                    <button type="button" id="pasteBtn" class="btn btn-dark btn-sm"><b>Paste</b></i></button>
+                    <button type="button" id="pasteNewsBtn" class="btn btn-dark btn-sm"><b>Paste</b></i></button>
                     <button type="button" id="submitBtn" class="btn btn-primary btn-sm"><b>Send</b><i class="bi bi-plus"></i></button>
                   </div>
                 </div>
                 <div class="fade show" id="alertMessage" role="alert"></div>
                 <div class="col-md-12">
                   <div class="form-floating">
-                    <textarea rows="5" style="height:100%;" class="form-control form-control-lg" placeholder="Input Long Text" name="lt" id="longText" style="height: 100px;"></textarea>
+                    <textarea rows="5" style="height:100%;" class="form-control form-control-lg" placeholder="Input Long Text" name="lt" id="newsText" style="height: 100px;"></textarea>
                     <label for="longText">Long Text</label>
                   </div>
                 </div>
@@ -85,17 +85,17 @@ include 'header.php';
                               <ul class="list-group">
                                 <li class="list-group-item d-flex align-items-center justify-content-between d-grid gap-1">
                                   <label class="text-sm-start">Var 1</label>
-                                  <input type="range" name="varone" id="varOne" data-target="varOneVal" class="form-range w-75 var var-slide" min="0" max="5" step="0.5" value="" id="varone">
+                                  <input type="range" name="varone" id="varOne" data-target="varOneVal" class="form-range w-75 var var-c var-slide" min="0" max="5" step="0.5" value="" id="varone">
                                   <span class="badge bg-primary rounded-pill" id="varOneVal">0</span>
                                 </li>
                                 <li class="list-group-item d-flex align-items-center justify-content-between d-grid gap-1">
                                   <label class="text-sm-start">Var 1</label>
-                                  <input type="range" name="vartwo" id="varTwo" data-target="varTwoVal" class="form-range w-75 var var-slide" min="0" max="5" step="0.5" value="" id="varone">
+                                  <input type="range" name="vartwo" id="varTwo" data-target="varTwoVal" class="form-range w-75 var var-c var-slide" min="0" max="5" step="0.5" value="" id="varone">
                                   <span class="badge bg-primary rounded-pill" id="varTwoVal">0</span>
                                 </li>
                                 <li class="list-group-item d-flex align-items-center justify-content-between d-grid gap-1">
                                   <label class="text-sm-start">Var 3</label>
-                                  <input type="range" name="varthree" id="varThree" data-target="varThreeVal" class="form-range w-75 var var-slide" min="0" max="5" step="0.5" value="" id="varone">
+                                  <input type="range" name="varthree" id="varThree" data-target="varThreeVal" class="form-range w-75 var var-c var-slide" min="0" max="5" step="0.5" value="" id="varone">
                                   <span class="badge bg-primary rounded-pill" id="varThreeVal">0</span>
                                 </li>
                               </ul>
@@ -104,15 +104,15 @@ include 'header.php';
                               <ul class="list-group">
                                 <li class="list-group-item d-flex justify-content-around">
                                   Enable X
-                                  <input class="form-check-input me-1 var" name="cbx" id="cbX" type="checkbox" value="X" aria-label="...">
+                                  <input class="form-check-input me-1 var var-c" name="cbx" id="cbX" type="checkbox" value="X" aria-label="...">
                                 </li>
                                 <li class="list-group-item d-flex justify-content-around">
                                   Enable Y
-                                  <input class="form-check-input me-1 var" name="cby" id="cbY" type="checkbox" value="Y" aria-label="...">
+                                  <input class="form-check-input me-1 var var-c" name="cby" id="cbY" type="checkbox" value="Y" aria-label="...">
                                 </li>
                                 <li class="list-group-item d-flex justify-content-around">
                                   Yes/No
-                                  <input class="form-check-input me-1 var" name="cbyn" id="cbYN" type="checkbox" value="Yes" aria-label="...">
+                                  <input class="form-check-input me-1 var var-c" name="cbyn" id="cbYN" type="checkbox" value="Yes" aria-label="...">
                                 </li>
                               </ul>
                             </div>
@@ -132,12 +132,12 @@ include 'header.php';
               <div class="d-flex justify-content-between align-items-center">
                 <h5 class="card-title">Summarized News</h5>
                 <div class="gap-2">
-                  <button type="button" id="copyBtn" class="btn btn-dark btn-sm"><b>Copy</b></i></button>
+                  <button type="button" id="copySumBtn" class="btn btn-dark btn-sm"><b>Copy</b></i></button>
                 </div>
               </div>
               <div class="col-12">
                 <div class="form-floating">
-                  <textarea rows="5" style="height:100%;" placeholder="" class="form-control  form-control-lg" id="sumText"></textarea>
+                  <textarea rows="5" style="height:100%;" placeholder="" class="form-control form-control-lg" id="sumText"></textarea>
                   <label for="sumText">Summarized</label>
                 </div>
               </div>

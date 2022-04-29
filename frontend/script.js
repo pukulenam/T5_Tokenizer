@@ -1,15 +1,23 @@
 $(document).ready(function () {
   //Init Event Listener
-
   const tmpls = document.querySelectorAll(".tmpl");
+  const dataVars = document.querySelectorAll(".var");
+  const sliders = document.querySelectorAll(".var-slide");
+  const varcs = document.querySelectorAll(".var-c");
+
   tmpls.forEach((tmpl) =>
     tmpl.addEventListener("change", (event) => {
-      tmplS = tmpl.value.split(",");
-      setAllConf(tmplS[0], tmplS[1], tmplS[2], tmplS[3], tmplS[4], tmplS[5]);
+      if (tmpl.value == "custom") {
+        varcs.forEach((varc) => {
+          setAllConf("0", "0", "0", "", "", "");
+        });
+      } else {
+        tmplS = tmpl.value.split(",");
+        setAllConf(tmplS[0], tmplS[1], tmplS[2], tmplS[3], tmplS[4], tmplS[5]);
+      }
     })
   );
 
-  const dataVars = document.querySelectorAll(".var");
   dataVars.forEach((dataVar) =>
     dataVar.addEventListener("change", (event) => {
       if (dataVar.getAttribute("type") == "checkbox") {
@@ -18,8 +26,8 @@ $(document).ready(function () {
         } else {
           val = dataVar.checked;
         }
-      }else{
-        val = dataVar.value
+      } else {
+        val = dataVar.value;
       }
       if (dataVar.getAttribute("type") == "radio") {
         setCookie(dataVar.getAttribute("name"), val);
@@ -29,13 +37,42 @@ $(document).ready(function () {
     })
   );
 
-  const sliders = document.querySelectorAll(".var-slide");
   sliders.forEach((slider) =>
     slider.addEventListener("change", (event) => {
       document.getElementById(slider.dataset.target).innerHTML = slider.value;
     })
   );
-  //Init Event Listener
+
+  varcs.forEach((varc) =>
+    varc.addEventListener("change", (event) => {
+      document.getElementById("tc").checked = true;
+    })
+  );
+
+  sumBtn = document.getElementById("copySumBtn");
+  sumBtn.addEventListener("click", function (event) {
+    var copyText = document.getElementById("sumText");
+
+    copyText.select();
+    copyText.setSelectionRange(0, 99999);
+    navigator.clipboard.writeText(copyText.value);
+
+    alert("Text Copied");
+  });
+
+  /*
+  //Disabled due by HTTPS Only, Uncomment only in Production.
+  newsBtn = document.getElementById("pasteNewsBtn");
+  newsBtn.addEventListener("click", function (event) {
+    navigator.clipboard
+      .readText()
+      .then(
+        (clipText) => (document.getElementById("newsText").value = clipText)
+      );
+  });
+  */
+
+  //End Event Listener
 
   //Start On Load Functions
   checkCookie();

@@ -211,7 +211,7 @@ include 'header.php';
   return "";
   }
   
-  if(getCookie("var1") != "undefined"){
+  if(typeof getCookie("var1") != "undefined"){
     document.getElementById("varOneVal").innerHTML = getCookie("var1");
     document.getElementById("varTwoVal").innerHTML = getCookie("var2");
     document.getElementById("varThreeVal").innerHTML = getCookie("var3");

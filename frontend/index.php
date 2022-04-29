@@ -89,7 +89,7 @@ include 'header.php';
                                     <label class="form-check-label">Var 1</label>
                                   </div>
                                   <div class="d-flex align-items-center" style="width:80%;">
-                                    <input type="range" name="varone" id="varOne" data-id="varOneVal" class="form-range var" min="0" max="5" step="0.5" id="varone">
+                                    <input type="range" name="varone" id="varOne" oninput="_var1();" data-id="varOneVal" class="form-range var" min="0" max="5" step="0.5" id="varone">
                                   </div>
                                   <div class="">
                                     <span class="badge bg-primary rounded-pill" id="varOneVal">XX</span>
@@ -100,7 +100,7 @@ include 'header.php';
                                     <label class="form-check-label">Var 2</label>
                                   </div>
                                   <div class="d-flex align-items-center" style="width:80%;">
-                                    <input type="range" name="vartwo" id="varTwo" data-id="varTwoVal" class="form-range var" min="0" max="5" step="0.5" id="varone">
+                                    <input type="range" name="vartwo" id="varTwo" oninput="_var2();" data-id="varTwoVal" class="form-range var" min="0" max="5" step="0.5" id="varone">
                                   </div>
                                   <div class="">
                                     <span class="badge bg-primary rounded-pill" id="varTwoVal">XX</span>
@@ -111,7 +111,7 @@ include 'header.php';
                                     <label class="form-check-label">Var 3</label>
                                   </div>
                                   <div class="d-flex align-items-center" style="width:75%;">
-                                    <input type="range" name="varthree" id="varThree" data-id="varThreeVal" class="form-range var" min="0" max="5" step="0.5" id="varone">
+                                    <input type="range" name="varthree" id="varThree" oninput="_var3();" data-id="varThreeVal" class="form-range var" min="0" max="5" step="0.5" id="varone">
                                   </div>
                                   <div class="">
                                     <span class="badge bg-primary rounded-pill" id="varThreeVal">XX</span>
@@ -184,10 +184,40 @@ include 'header.php';
 </html>
 
 <script>
+  var var1;
+  var var2;
+  var var3;
+  timeout();
+
   $(document).ready(function() {
     $(document).on('change', '.var', function() {
       console.log($(this).val());
       $('#' + $(this).data('id')).html($(this).val());
     });
   });
+
+  function _var1(){
+    var1 = document.getElementById("varOne").value;
+  }
+
+  function _var2(){
+    var2 = document.getElementById("varTwo").value;
+  }
+
+  function _var3(){
+    var3 = document.getElementById("varThree").value;
+  }
+
+  function timeout() {
+    setTimeout(function () {
+        if(typeof var1 == "undefined" || typeof var2 == "undefined" || typeof var3 =="undefined"){
+          var1 = var2 = var3 = 2.5;
+        }
+
+        document.getElementById("varOneVal").value = var1;
+        document.getElementById("varOneVal").value = var1;
+        document.getElementById("varOneVal").value = var1;
+        timeout();
+    }, 200);
+  }  
 </script>

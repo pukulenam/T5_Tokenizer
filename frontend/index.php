@@ -14,7 +14,7 @@ include 'header.php';
           <div class="d-flex justify-content-center py-4">
             <a href="#" class="logo d-flex align-items-center w-auto">
               <img src="assets/img/logo.png" alt="Logo N">
-              <span class="d-none d-lg-block fs-3">T5</span>
+              <span class="d-lg-block fs-3">T5</span>
             </a>
           </div><!-- End Logo -->
           <div class="row row-cols-2">

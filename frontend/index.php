@@ -263,9 +263,6 @@ include 'header.php';
         document.getElementById("varOneVal").innerHTML = var1;
         document.getElementById("varTwoVal").innerHTML = var2;
         document.getElementById("varThreeVal").innerHTML = var3;
-        document.getElementById("enx").checked = (cek1 === 'true');
-        document.getElementById("eny").checked = (cek2 === 'true');
-        document.getElementById("enyes").checked = (cek3 === 'true');
 
         setCookie("var1",var1,1);
         setCookie("var2",var2,1);

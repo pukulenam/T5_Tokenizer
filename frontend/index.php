@@ -221,10 +221,11 @@ include 'header.php';
     document.getElementById("varOne").value = getCookie("var1");
     document.getElementById("varTwo").value = getCookie("var2");
     document.getElementById("varThree").value = getCookie("var3");
-    document.getElementById("enx").checked = (getValue("cek1") === 'true');
-    document.getElementById("eny").checked = (getValue("cek2") === 'true');
-    document.getElementById("enyes").checked = (getValue("cek3") === 'true');
   }
+
+  document.getElementById("enx").checked = (getValue("cek1") === 'true');
+  document.getElementById("eny").checked = (getValue("cek2") === 'true');
+  document.getElementById("enyes").checked = (getValue("cek3") === 'true');
 
   $(document).ready(function() {
     $(document).on('change', '.var', function() {

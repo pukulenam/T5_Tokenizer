@@ -49,31 +49,31 @@ include 'header.php';
                         <div class="d-flex justify-content-center">
                           <div class="gap-2">
                             <div class="form-check form-check-inline">
-                              <input class="form-check-input templ-radio" type="radio" id="t1" name="tmpl" value="1,0.5,2,checked,checked,false">
+                              <input class="form-check-input var tmpl" type="radio" id="t1" name="tmpl" value="1,0.5,2,true,true,">
                               <label class="form-check-label text-md-start" for="t1">
                                 Default
                               </label>
                             </div>
                             <div class="form-check form-check-inline">
-                              <input class="form-check-input templ-radio" type="radio" id="t2" name="tmpl" value="2,1,1.5,false,checked,false">
+                              <input class="form-check-input var tmpl" type="radio" id="t2" name="tmpl" value="2,1,1.5,,true,">
                               <label class="form-check-label text-md-start" for="t2">
                                 Template 2
                               </label>
                             </div>
                             <div class="form-check form-check-inline">
-                              <input class="form-check-input templ-radio" type="radio" id="t3" name="tmpl" value="3,2,1.5,false,checked,false">
+                              <input class="form-check-input var tmpl" type="radio" id="t3" name="tmpl" value="3,2,1.5,,true,">
                               <label class="form-check-label text-md-start" for="t3">
                                 Template 3
                               </label>
                             </div>
                             <div class="form-check form-check-inline">
-                              <input class="form-check-input templ-radio" type="radio" id="t4" name="tmpl" value="4,1,0.5,checked,false,checked">
+                              <input class="form-check-input var tmpl" type="radio" id="t4" name="tmpl" value="4,1,0.5,true,,true">
                               <label class="form-check-label text-md-start" for="t4">
                                 Template 4
                               </label>
                             </div>
                             <div class="form-check form-check-inline">
-                              <input class="form-check-input templ-radio" type="radio" id="tc" name="tmpl" value="C">
+                              <input class="form-check-input var tmpl" type="radio" id="tc" name="tmpl" value="custom">
                               <label class="form-check-label text-md-start" for="tc">
                                 Custom
                               </label>
@@ -85,17 +85,17 @@ include 'header.php';
                               <ul class="list-group">
                                 <li class="list-group-item d-flex align-items-center justify-content-between d-grid gap-1">
                                   <label class="text-sm-start">Var 1</label>
-                                  <input type="range" name="varone" id="varOne" data-id="varOneVal" oninput="_var1();" class="form-range w-75 var-slide" min="0" max="5" step="0.5" value="" id="varone">
+                                  <input type="range" name="varone" id="varOne" data-target="varOneVal" class="form-range w-75 var var-slide" min="0" max="5" step="0.5" value="" id="varone">
                                   <span class="badge bg-primary rounded-pill" id="varOneVal">0</span>
                                 </li>
                                 <li class="list-group-item d-flex align-items-center justify-content-between d-grid gap-1">
                                   <label class="text-sm-start">Var 1</label>
-                                  <input type="range" name="vartwo" id="varTwo" data-id="varTwoVal" oninput="_var2();" class="form-range w-75 var-slide" min="0" max="5" step="0.5" value="" id="varone">
+                                  <input type="range" name="vartwo" id="varTwo" data-target="varTwoVal" class="form-range w-75 var var-slide" min="0" max="5" step="0.5" value="" id="varone">
                                   <span class="badge bg-primary rounded-pill" id="varTwoVal">0</span>
                                 </li>
                                 <li class="list-group-item d-flex align-items-center justify-content-between d-grid gap-1">
                                   <label class="text-sm-start">Var 3</label>
-                                  <input type="range" name="varthree" id="varThree" data-id="varThreeVal" oninput="_var3();" class="form-range w-75 var-slide" min="0" max="5" step="0.5" value="" id="varone">
+                                  <input type="range" name="varthree" id="varThree" data-target="varThreeVal" class="form-range w-75 var var-slide" min="0" max="5" step="0.5" value="" id="varone">
                                   <span class="badge bg-primary rounded-pill" id="varThreeVal">0</span>
                                 </li>
                               </ul>
@@ -104,15 +104,15 @@ include 'header.php';
                               <ul class="list-group">
                                 <li class="list-group-item d-flex justify-content-around">
                                   Enable X
-                                  <input class="form-check-input me-1" name="cbx" id="cbX" type="checkbox" value="X" aria-label="...">
+                                  <input class="form-check-input me-1 var" name="cbx" id="cbX" type="checkbox" value="X" aria-label="...">
                                 </li>
                                 <li class="list-group-item d-flex justify-content-around">
                                   Enable Y
-                                  <input class="form-check-input me-1" name="cby" id="cbY" type="checkbox" value="Y" aria-label="...">
+                                  <input class="form-check-input me-1 var" name="cby" id="cbY" type="checkbox" value="Y" aria-label="...">
                                 </li>
                                 <li class="list-group-item d-flex justify-content-around">
                                   Yes/No
-                                  <input class="form-check-input me-1" name="cbyn" id="cbYN" type="checkbox" value="Yes" aria-label="...">
+                                  <input class="form-check-input me-1 var" name="cbyn" id="cbYN" type="checkbox" value="Yes" aria-label="...">
                                 </li>
                               </ul>
                             </div>

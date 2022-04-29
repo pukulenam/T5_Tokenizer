@@ -9,12 +9,12 @@ include 'header.php';
 
   <main>
     <section class="section d-flex flex-column align-items-center justify-content-center py-4">
-      <div class="d-none col-lg-11">
+      <div class="col-lg-11">
         
           <div class="d-flex justify-content-center py-4">
             <a href="#" class="logo d-flex align-items-center w-auto">
               <img src="assets/img/logo.png" alt="Logo N">
-              <span class="d-lg-block fs-3">T5</span>
+              <span class="d-none d-lg-block fs-3">T5</span>
             </a>
           </div><!-- End Logo -->
           <div class="row row-cols-2">

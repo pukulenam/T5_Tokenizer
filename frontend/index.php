@@ -241,8 +241,10 @@ include 'header.php';
 
   function timeout() {
     setTimeout(function () {
-        if(typeof var1 == "undefined" || typeof var2 == "undefined" || typeof var3 =="undefined"){
-          var1 = var2 = var3 = 2.5;
+        if(typeof var1 == "undefined"){
+          var1 = getCookie("var1");
+          var2 = getCookie("var2");
+          var3 = getCookie("var3");
         }
 
         document.getElementById("varOneVal").innerHTML = var1;

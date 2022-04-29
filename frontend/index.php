@@ -221,9 +221,9 @@ include 'header.php';
     document.getElementById("varOne").value = getCookie("var1");
     document.getElementById("varTwo").value = getCookie("var2");
     document.getElementById("varThree").value = getCookie("var3");
-    document.getElementById("enx").checked = getValue("cek1");
-    document.getElementById("eny").checked = getValue("cek2");
-    document.getElementById("enyes").checked = getValue("cek3");
+    document.getElementById("enx").checked = (getValue("cek1") === 'true');
+    document.getElementById("eny").checked = (getValue("cek2") === 'true');
+    document.getElementById("enyes").checked = (getValue("cek3") === 'true');
   }
 
   $(document).ready(function() {
@@ -263,9 +263,9 @@ include 'header.php';
         document.getElementById("varOneVal").innerHTML = var1;
         document.getElementById("varTwoVal").innerHTML = var2;
         document.getElementById("varThreeVal").innerHTML = var3;
-        document.getElementById("enx").checked = cek1;
-        document.getElementById("eny").checked = cek2;
-        document.getElementById("enyes").checked = cek3;
+        document.getElementById("enx").checked = (cek1 === 'true');
+        document.getElementById("eny").checked = (cek2 === 'true');
+        document.getElementById("enyes").checked = (cek3 === 'true');
 
         setCookie("var1",var1,1);
         setCookie("var2",var2,1);

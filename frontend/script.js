@@ -69,12 +69,12 @@ function getradio(_text){
     return;
   }
   var myArray = _text.split(",");
-  var1 = myArray[0];
-  var2 = myArray[1];
-  var3 = myArray[2];
-  cek1 = myArray[3];
-  cek2 = myArray[4];
-  cek3 = myArray[5];
+  document.getElementById('varOne').value = var1 = myArray[0];
+  document.getElementById('varTwo').value = var2 = myArray[1];
+  document.getElementById('varThree').value = var3 = myArray[2];
+  document.getElementById("cbX").checked = cek1 = myArray[3];
+  document.getElementById("cbY").checked = cek2 = myArray[4];
+  document.getElementById("cbYN").checked = cek3 = myArray[5];
 }
 
 function timeout() {

@@ -49,7 +49,7 @@ include 'header.php';
                         <div class="d-flex justify-content-center">
                           <div class="gap-2">
                             <div class="form-check form-check-inline">
-                              <input class="form-check-input templ-radio" onclick="myFunction(this.value)" type="radio" id="t1" name="tmpl" value="1,0.5,2,checked,checked,false">
+                              <input class="form-check-input templ-radio" onclick="myFunction(this.value)" type="radio" id="t1" name="tmpl" value="1,0.5,2,true,true,false">
                               <label class="form-check-label text-md-start" for="t1">
                                 Default
                               </label>

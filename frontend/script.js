@@ -72,9 +72,9 @@ function getradio(_text){
   document.getElementById('varOne').value = var1 = myArray[0];
   document.getElementById('varTwo').value = var2 = myArray[1];
   document.getElementById('varThree').value = var3 = myArray[2];
-  document.getElementById("cbX").checked = cek1 = myArray[3];
-  document.getElementById("cbY").checked = cek2 = myArray[4];
-  document.getElementById("cbYN").checked = cek3 = myArray[5];
+  document.getElementById("cbX").checked = cek1 = (myArray[3] === 'true');
+  document.getElementById("cbY").checked = cek2 = (myArray[4] === 'true');
+  document.getElementById("cbYN").checked = cek3 = (myArray[5] === 'true');
 }
 
 function timeout() {

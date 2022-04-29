@@ -64,12 +64,17 @@ function _var3(){
 function timeout() {
   setTimeout(function () {
       if(typeof var1 == "undefined"){
+        if(getCookie("var1") == ""){
+          var1 = var2 = var3 = 2.5;
+        }
+        else {
         var1 = getCookie("var1");
         var2 = getCookie("var2");
         var3 = getCookie("var3");
         cek1 = getCookie("cek1");
         cek2 = getCookie("cek2");
         cek3 = getCookie("cek3");
+        }
       }
 
       cek1 = document.getElementById("cbX").checked;

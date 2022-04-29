@@ -49,31 +49,31 @@ include 'header.php';
                         <div class="d-flex justify-content-center">
                           <div class="gap-2">
                             <div class="form-check form-check-inline">
-                              <input class="form-check-input templ-radio" type="radio" id="t1" name="tmpl" value="1,0.5,2,checked,checked,false">
+                              <input class="form-check-input templ-radio" onclick="myFunction(this.value)" type="radio" id="t1" name="tmpl" value="1,0.5,2,checked,checked,false">
                               <label class="form-check-label text-md-start" for="t1">
                                 Default
                               </label>
                             </div>
                             <div class="form-check form-check-inline">
-                              <input class="form-check-input templ-radio" type="radio" id="t2" name="tmpl" value="2,1,1.5,false,checked,false">
+                              <input class="form-check-input templ-radio" onclick="getradio(this.value);" type="radio" id="t2" name="tmpl" value="2,1,1.5,false,true,false">
                               <label class="form-check-label text-md-start" for="t2">
                                 Template 2
                               </label>
                             </div>
                             <div class="form-check form-check-inline">
-                              <input class="form-check-input templ-radio" type="radio" id="t3" name="tmpl" value="3,2,1.5,false,checked,false">
+                              <input class="form-check-input templ-radio" onclick="getradio(this.value);" type="radio" id="t3" name="tmpl" value="3,2,1.5,false,true,false">
                               <label class="form-check-label text-md-start" for="t3">
                                 Template 3
                               </label>
                             </div>
                             <div class="form-check form-check-inline">
-                              <input class="form-check-input templ-radio" type="radio" id="t4" name="tmpl" value="4,1,0.5,checked,false,checked">
+                              <input class="form-check-input templ-radio" onclick="getradio(this.value);" type="radio" id="t4" name="tmpl" value="4,1,0.5,true,true,true">
                               <label class="form-check-label text-md-start" for="t4">
                                 Template 4
                               </label>
                             </div>
                             <div class="form-check form-check-inline">
-                              <input class="form-check-input templ-radio" type="radio" id="tc" name="tmpl" value="C">
+                              <input class="form-check-input templ-radio" onclick="getradio(this.value);" type="radio" id="tc" name="tmpl" value="c">
                               <label class="form-check-label text-md-start" for="tc">
                                 Custom
                               </label>

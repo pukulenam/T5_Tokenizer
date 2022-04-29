@@ -50,15 +50,31 @@ $(document).ready(function () {
 
 
 function _var1(){
+  document.getElementById('tc').checked = true;
   var1 = document.getElementById("varOne").value;
 }
 
 function _var2(){
+  document.getElementById('tc').checked = true;
   var2 = document.getElementById("varTwo").value;
 }
 
 function _var3(){
+  document.getElementById('tc').checked = true;
   var3 = document.getElementById("varThree").value;
+}
+
+function getradio(_text){
+  if(_text == "c") {
+    return;
+  }
+  var myArray = _text.split(",");
+  var1 = myArray[0];
+  var2 = myArray[1];
+  var3 = myArray[2];
+  cek1 = myArray[3];
+  cek2 = myArray[4];
+  cek3 = myArray[5];
 }
 
 function timeout() {

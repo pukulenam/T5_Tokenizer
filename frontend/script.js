@@ -37,9 +37,9 @@ if(typeof getCookie("var1") != "undefined"){
   document.getElementById("varThree").value = getCookie("var3");
 }
 
-document.getElementById("enx").checked = (getCookie("cek1") === 'true');
-document.getElementById("eny").checked = (getCookie("cek2") === 'true');
-document.getElementById("enyes").checked = (getCookie("cek3") === 'true');
+document.getElementById("cbX").checked = (getCookie("cek1") === 'true');
+document.getElementById("cbY").checked = (getCookie("cek2") === 'true');
+document.getElementById("cbYN").checked = (getCookie("cek3") === 'true');
 
 $(document).ready(function() {
   $(document).on('change', '.var', function() {
@@ -71,9 +71,9 @@ function timeout() {
         cek3 = getCookie("cek3");
       }
 
-      cek1 = document.getElementById("enx").checked;
-      cek2 = document.getElementById("eny").checked;
-      cek3 = document.getElementById("enyes").checked;
+      cek1 = document.getElementById("cbX").checked;
+      cek2 = document.getElementById("cbY").checked;
+      cek3 = document.getElementById("cbYN").checked;
 
       document.getElementById("varOneVal").innerHTML = var1;
       document.getElementById("varTwoVal").innerHTML = var2;

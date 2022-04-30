@@ -15,7 +15,7 @@ $(document).ready(function () {
         tmplS = tmpl.value.split(",");
         setAllConf(tmplS[0], tmplS[1], tmplS[2], tmplS[3], tmplS[4], tmplS[5]);
       }
-      setCurConf (document.querySelector('label[for="'+tmpl.getAttribute("id")+'"]').innerHTML);
+      setCurConf()
     })
   );
 
@@ -77,12 +77,19 @@ $(document).ready(function () {
 
   //Start On Load Functions
   checkCookie();
+ 
   //End On Load Functions
 
   //Start Functions Set
 
-  function setCurConf (val){
-    document.getElementById("curConf").innerHTML = val;
+  function setCurConf() {
+    checkedradio = document.querySelector('input[name = "tmpl"]:checked');
+    if (checkedradio == "null"){
+      document.querySelector('input[name = "tmpl"]').value = "1,0.5,2,true,true,"
+    }else 
+    document.getElementById("curConf").innerHTML = document.querySelector(
+      'label[for="' + checkedradio.getAttribute("id") + '"]'
+    ).innerHTML;
   }
 
   function setSliderVal(target, val) {
@@ -96,15 +103,20 @@ $(document).ready(function () {
 
   function checkCookie() {
     if (typeof getCookie("tmpl") != "undefined") {
-      setAllConf(
-        getCookie("varOne"),
-        getCookie("varTwo"),
-        getCookie("varThree"),
-        getCookie("CbX"),
-        getCookie("CbY"),
-        getCookie("CbYN")
-      );
+      if (getCookie("tmpl") != "custom") {
+        document.querySelector('input[name = "tmpl"]').value = getCookie("tmpl");
+      } else {
+        setAllConf(
+          getCookie("varOne"),
+          getCookie("varTwo"),
+          getCookie("varThree"),
+          getCookie("CbX"),
+          getCookie("CbY"),
+          getCookie("CbYN")
+        );
+      }
     }
+    setCurConf();
   }
 
   function setAllConf(var1, var2, var3, var4, var5, var6) {

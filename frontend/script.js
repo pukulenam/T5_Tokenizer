@@ -85,29 +85,12 @@ $(document).ready(function () {
   //Asynchronous update
   function timeout() {
     setTimeout(function () {
-      document.getElementById("cbX").checked = (getCookie("cbX") == "true");
-      document.getElementById("cbY").checked = (getCookie("cbY") == "true");
-      document.getElementById("cbYN").checked = (getCookie("cbYN") == "true");
+      document.getElementById("cbX").checked = (getCookie("CbX") == "true");
+      document.getElementById("cbY").checked = (getCookie("CbY") == "true");
+      document.getElementById("cbYN").checked = (getCookie("CbYN") == "true");
         timeout();
     }, 80);
   }
-
-  //getradio
-  function getradio(_text){ 
-    /*
-    if(_text == "custom") {
-      return;
-    }
-    var myArray = _text.split(",");
-    setCookie("varOne", myArray[0]);
-    setCookie("varTwo", myArray[1]);
-    setCookie("varThree", myArray[2]);
-    setCookie("CbX", myArray[3]);
-    setCookie("CbY", myArray[4]);
-    setCookie("CbYN", myArray[5]);
-    */
-  }
-  
   
 
   function setCurConf() {

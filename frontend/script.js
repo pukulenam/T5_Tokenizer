@@ -82,6 +82,19 @@ $(document).ready(function () {
 
   //Start Functions Set
 
+  //Asynchronous update
+  function timeout() {
+    setTimeout(function () {
+      if(getCookie("tmpl") == "custom" || getCookie("tmpl") == ""){
+      document.getElementById("cbX").checked = (getCookie("cbX") == "true");
+      document.getElementById("cbY").checked = (getCookie("cbY") == "true");
+      document.getElementById("cbYN").checked = (getCookie("cbYN") == "true");
+      }
+        timeout();
+    }, 80);
+  }
+  
+
   function setCurConf() {
     checkedradio = document.querySelector('input[name = "tmpl"]:checked');
     if (checkedradio == "null") {
@@ -98,10 +111,11 @@ $(document).ready(function () {
   }
 
   function setCbCond(target, val) {
-    document.getElementById(target).checked = val;
+    document.getElementById(target).checked = (val == "true");
   }
 
   function startInit() {
+    timeout();
     if (typeof getCookie("tmpl") != "undefined") {
       if (getCookie("tmpl") != "custom") {
         document.querySelector('input[name = "tmpl"]').value =
@@ -153,6 +167,6 @@ $(document).ready(function () {
     }
     return "";
   }
-
+  
   //ENd Functions Set
 });

@@ -93,7 +93,8 @@ $(document).ready(function () {
   }
 
   //getradio
-  function getradio(_text){
+  function getradio(_text){ 
+    /*
     if(_text == "custom") {
       return;
     }
@@ -104,6 +105,7 @@ $(document).ready(function () {
     setCookie("CbX", myArray[3]);
     setCookie("CbY", myArray[4]);
     setCookie("CbYN", myArray[5]);
+    */
   }
   
   

@@ -74,8 +74,7 @@ $(document).ready(function () {
   */
 
   //End Event Listener
-  //Start On Load Functions
-  startInit();
+  
 
   //End On Load Functions
 
@@ -93,7 +92,7 @@ $(document).ready(function () {
 
   function setSliderVal(target, val) {
     document.getElementById(target).value = val;
-    document​.​getElementById​(​target​ ​+​ ​"Val"​)​.​innerHTML​ ​=​ ​val​;
+    document.getElementById(target + "Val").innerHTML = val;
   }
 
   function setCbCond(target, val) {
@@ -152,5 +151,7 @@ $(document).ready(function () {
     }
     return "";
   }
+  //Start On Load Functions
+  startInit();
   //ENd Functions Set
 });

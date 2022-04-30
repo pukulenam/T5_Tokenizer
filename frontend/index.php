@@ -5,6 +5,7 @@
 include 'header.php';
 ?>
 
+
 <body>
 
   <main class="d-flex justify-content-center align-items-center ">
@@ -18,21 +19,21 @@ include 'header.php';
         </div><!-- End Logo -->
       </div>
       <div class="row d-flex justify-content-center">
+      <div class="bg-success text-light text-center fw-bold border-0 alert-dismissible align-text-center fade show" id="alertMessage" role="alert"></div>
         <div class="col-lg-7">
-          <form method="POST" class="g-2 needs-validation" id="officeLogin" novalidate>
+          <form method="POST" class="g-2 needs-validation" id="tokenizerForm" novalidate>
             <div class="card">
               <div class="card-body d-flex flex-column">
                 <div class="d-flex justify-content-between align-items-center">
                   <h5 class="card-title">Input News</h5>
                   <div class="gap-2">
                     <button type="button" id="pasteNewsBtn" class="btn btn-dark btn-sm"><b>Paste</b></i></button>
-                    <button type="button" id="submitBtn" class="btn btn-primary btn-sm"><b>Send</b><i class="bi bi-plus"></i></button>
+                    <button type="submit" id="submitBtn" class="btn btn-primary btn-sm"><b>Send</b><i class="bi bi-plus"></i></button>
                   </div>
                 </div>
-                <div class="fade show" id="alertMessage" role="alert"></div>
                 <div class="col-md-12">
                   <div class="form-floating">
-                    <textarea rows="5" style="height:100%;" class="form-control form-control-lg" placeholder="Input Long Text" name="lt" id="newsText" style="height: 100px;"></textarea>
+                    <textarea required rows="5" style="height:100%;" class="form-control form-control-lg" placeholder="Input Long Text" name="lt" id="newsText" style="height: 100px;"></textarea>
                     <label for="longText">Long Text</label>
                   </div>
                 </div>

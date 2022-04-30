@@ -77,7 +77,7 @@ $(document).ready(function () {
 
   //Start On Load Functions
   startInit();
-
+  generalAjax('sessioncheck');
   //End On Load Functions
 
   //Start Functions Set
@@ -85,24 +85,24 @@ $(document).ready(function () {
   //Asynchronous update
   function timeout() {
     setTimeout(function () {
-      if(getCookie("tmpl") == "custom" || getCookie("tmpl") == ""){
-      document.getElementById("cbX").checked = (getCookie("cbX") == "true");
-      document.getElementById("cbY").checked = (getCookie("cbY") == "true");
-      document.getElementById("cbYN").checked = (getCookie("cbYN") == "true");
+      if (getCookie("tmpl") == "custom" || getCookie("tmpl") == "") {
+        document.getElementById("cbX").checked = getCookie("cbX") == "true";
+        document.getElementById("cbY").checked = getCookie("cbY") == "true";
+        document.getElementById("cbYN").checked = getCookie("cbYN") == "true";
       }
-        timeout();
+      timeout();
     }, 80);
   }
-  
 
   function setCurConf() {
     checkedradio = document.querySelector('input[name = "tmpl"]:checked');
-    if (checkedradio == "null") {
+    if (!checkedradio) {
       document.getElementById("t1").checked = true;
+    }else{
+      document.getElementById("curConf").innerHTML = document.querySelector(
+        'label[for="' + checkedradio.getAttribute("id") + '"]'
+      ).innerHTML;
     }
-    document.getElementById("curConf").innerHTML = document.querySelector(
-      'label[for="' + checkedradio.getAttribute("id") + '"]'
-    ).innerHTML;
   }
 
   function setSliderVal(target, val) {
@@ -111,7 +111,7 @@ $(document).ready(function () {
   }
 
   function setCbCond(target, val) {
-    document.getElementById(target).checked = (val == "true");
+    document.getElementById(target).checked = val == "true";
   }
 
   function startInit() {
@@ -167,6 +167,75 @@ $(document).ready(function () {
     }
     return "";
   }
-  
-  //ENd Functions Set
+
+  //End Functions Set
+
+  //Start Jquery AJAX Functions
+  let alertMsg = $("#alertMessage");
+
+  function generalAjax(action) {
+    $.ajax({
+      url: "action.php",
+      method: "POST",
+      data: {
+        action: action
+      },
+      dataType: "JSON",
+      success: function (data) {
+        if (data.error != "") {
+          alertMsg.addClass(data.alert).html(data.error);
+          setTimeout(function () {
+            alertFormMsg.removeClass(data.alert).html("");
+          }, 3000);
+        } else {
+          alertMsg.addClass(data.alert).html(data.success);
+          setTimeout(function () {
+            alertMsg.removeClass(data.alert).html("");
+          }, 3000);
+        }
+      },
+    });
+  }
+
+  let tokenizerform = $("#tokenizerForm");
+  tokenizerform.on("submit", function (event) {
+    event.preventDefault();
+    if (!tokenizerform[0].checkValidity()) {
+      event.preventDefault();
+      event.stopPropagation();
+    } else {
+      $.ajax({
+        url: "action.php",
+        method: "POST",
+        data: new FormData(this),
+        dataType: "json",
+        contentType: false,
+        cache: false,
+        processData: false,
+        beforeSend: function () {
+          $("#submitBtn").attr("disabled", true).html("Wait...");
+        },
+        success: function (data) {
+          $("#submitBtn").attr("disabled", false);
+
+          if (data.reqstatus == 1) {
+            generalAjax (checkreq);
+          }
+
+          if (data.error != "") {
+            alertMsg.addClass(data.alert).html(data.error);
+            setTimeout(function () {
+              alertFormMsg.removeClass(data.alert).html("");
+            }, 3000);
+          } else {
+            alertMsg.addClass(data.alert).html(data.success);
+            setTimeout(function () {
+              alertMsg.removeClass(data.alert).html("");
+            }, 3000);
+          }
+        },
+      });
+    }
+  });
+  //End Jquery AJAX Functions
 });

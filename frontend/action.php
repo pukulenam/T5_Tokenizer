@@ -1,37 +1,34 @@
 <?php
 
-include($_SERVER['DOCUMENT_ROOT'] . '/T5_Tokenizer/frontend' . '/assets/php/Appointment.php');
+include('assets/php/config.php');
 
-$object = new Appointment;
+$object = new Syst;
 
-$gen_unum = strtoupper(substr(md5(uniqid()), 0, 4));
-$data = array(
-    ':var2' => $gen_unum,
-    ':var1' => $_POST["varone"]
-);
+if (isset($_POST["action"])) {
 
-$object->query = "
-	INSERT INTO test_tbl 
-	(var1, var2) 
-	VALUES 
-	(:var1, :var2)
-	";
+	$alert = '';
+	$error = '';
+	$success = '';
 
-$object->execute($data);
+	if ($_POST["action"] == 'sessioncheck') {
+		if ($object->ses_init()) {
 
-$command = escapeshellcmd('test.py' . json_encode($_POST["varone"]));
-$output = shell_exec($command);
+			$alert = 'alert alert-success';
+			$success = 'Halo Selamat Datang Kembali';
 
-$data = array(
-    ':var3'		=>	json_decode($output)
-);
+		} else {
+			$gen_sessionid = strtoupper(substr(md5(uniqid()), 0, 12));
+			$_SESSION['sesid'] = $gen_sessionid;
 
-$object->query = "
-	UPDATE test_tbl
-	SET var3 = :var3
-	WHERE var2 = '" . $gen_unum . "'
-	";
+			$alert = 'alert alert-success';
+			$success = 'Halo Selamat Datang di T5Tokenizer News Summarization';
+		}
 
-$object->execute($data);
-
-
+		$output = array(
+			'alert'		=>  $alert,
+			'error'		=>	$error,
+			'success'	=>	$success
+		);
+	}
+	echo json_encode($output);
+}

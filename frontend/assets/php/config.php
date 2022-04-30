@@ -1,8 +1,7 @@
 <?php
 
-//Appointment.php
 setlocale(LC_TIME, 'id_ID.utf8');
-class Appointment
+class Syst
 {
 	public $base_url = 'http://localhost/t5_tokenizer/frontend/';
 	public $connect;
@@ -41,4 +40,12 @@ class Appointment
 		return $this->connect->query($this->query, PDO::FETCH_ASSOC);
 	}
 
+	function ses_init()
+	{
+		if (isset($_SESSION['sesid'])) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

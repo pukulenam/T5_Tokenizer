@@ -91,7 +91,8 @@ $(document).ready(function () {
       document.getElementById("cbYN").checked = (getCookie("CbYN") == "true");
         timeout();
     }, 80);
-
+  }
+  
 
   function setCurConf() {
     checkedradio = document.querySelector('input[name = "tmpl"]:checked');

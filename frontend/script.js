@@ -74,13 +74,24 @@ $(document).ready(function () {
   */
 
   //End Event Listener
-  
+
   //Start On Load Functions
   startInit();
 
   //End On Load Functions
 
   //Start Functions Set
+
+  //Asynchronous update
+  timeout();
+  function timeout() {
+    setTimeout(function () {
+      document.getElementById("cbX").checked = (getCookie("CbX") == "true");
+      document.getElementById("cbY").checked = (getCookie("CbY") == "true");
+      document.getElementById("cbYN").checked = (getCookie("CbYN") == "true");
+        timeout();
+    }, 80);
+
 
   function setCurConf() {
     checkedradio = document.querySelector('input[name = "tmpl"]:checked');

@@ -85,9 +85,11 @@ $(document).ready(function () {
   //Asynchronous update
   function timeout() {
     setTimeout(function () {
+      if(getCookie("tmpl") == "custom" || getCookie("tmpl") == ""){
       document.getElementById("cbX").checked = (getCookie("cbX") == "true");
       document.getElementById("cbY").checked = (getCookie("cbY") == "true");
       document.getElementById("cbYN").checked = (getCookie("cbYN") == "true");
+      }
         timeout();
     }, 80);
   }

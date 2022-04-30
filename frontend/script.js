@@ -15,7 +15,7 @@ $(document).ready(function () {
         tmplS = tmpl.value.split(",");
         setAllConf(tmplS[0], tmplS[1], tmplS[2], tmplS[3], tmplS[4], tmplS[5]);
       }
-      setCurConf()
+      setCurConf();
     })
   );
 
@@ -76,17 +76,17 @@ $(document).ready(function () {
   //End Event Listener
 
   //Start On Load Functions
-  checkCookie();
- 
+  startInit();
+
   //End On Load Functions
 
   //Start Functions Set
 
   function setCurConf() {
     checkedradio = document.querySelector('input[name = "tmpl"]:checked');
-    if (checkedradio == "null"){
-      document.querySelector('input[name = "tmpl"]').value = "1,0.5,2,true,true,"
-    }else 
+    if (checkedradio == "null") {
+      document.getElementById("t1").checked = true;
+    }
     document.getElementById("curConf").innerHTML = document.querySelector(
       'label[for="' + checkedradio.getAttribute("id") + '"]'
     ).innerHTML;
@@ -101,10 +101,11 @@ $(document).ready(function () {
     document.getElementById(target).checked = val;
   }
 
-  function checkCookie() {
+  function startInit() {
     if (typeof getCookie("tmpl") != "undefined") {
       if (getCookie("tmpl") != "custom") {
-        document.querySelector('input[name = "tmpl"]').value = getCookie("tmpl");
+        document.querySelector('input[name = "tmpl"]').value =
+          getCookie("tmpl");
       } else {
         setAllConf(
           getCookie("varOne"),
@@ -117,6 +118,9 @@ $(document).ready(function () {
       }
     }
     setCurConf();
+    sliders.forEach((slider) => {
+      document.getElementById(slider.dataset.target).innerHTML = slider.value;
+    });
   }
 
   function setAllConf(var1, var2, var3, var4, var5, var6) {

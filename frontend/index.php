@@ -53,7 +53,7 @@ include 'header.php';
                               <label class="form-check-label text-md-start" for="t1">Default</label>
                             </div>
                             <div class="form-check form-check-inline">
-                              <input class="form-check-input var tmpl" type="radio" id="t2" name="tmpl" value="2,1,1.5,,true,">
+                              <input class="form-check-input var tmpl" type="radio" id="t2" name="tmpl" value="2,1,1.5,,true,true">
                               <label class="form-check-label text-md-start" for="t2">Template 2</label>
                             </div>
                             <div class="form-check form-check-inline">

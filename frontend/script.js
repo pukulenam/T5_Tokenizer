@@ -83,7 +83,6 @@ $(document).ready(function () {
   //Start Functions Set
 
   //Asynchronous update
-  timeout();
   function timeout() {
     setTimeout(function () {
       document.getElementById("cbX").checked = (getCookie("CbX") == "true");
@@ -114,6 +113,7 @@ $(document).ready(function () {
   }
 
   function startInit() {
+    timeout();
     if (typeof getCookie("tmpl") != "undefined") {
       if (getCookie("tmpl") != "custom") {
         document.querySelector('input[name = "tmpl"]').value =

@@ -75,6 +75,8 @@ $(document).ready(function () {
 
   //End Event Listener
   
+  //Start On Load Functions
+  startInit();
 
   //End On Load Functions
 
@@ -151,7 +153,6 @@ $(document).ready(function () {
     }
     return "";
   }
-  //Start On Load Functions
-  startInit();
+  
   //ENd Functions Set
 });

@@ -216,12 +216,7 @@ $(document).ready(function () {
           $("#submitBtn").attr("disabled", true).html("Wait...");
         },
         success: function (data) {
-          $("#submitBtn").attr("disabled", false);
-
-          if (data.reqstatus == 1) {
-            generalAjax (checkreq);
-          }
-
+          $("#submitBtn").attr("disabled", false).html("Send");
           if (data.error != "") {
             alertMsg.addClass(data.alert).html(data.error);
             setTimeout(function () {
@@ -232,6 +227,7 @@ $(document).ready(function () {
             setTimeout(function () {
               alertMsg.removeClass(data.alert).html("");
             }, 3000);
+            $('#sumText').val(data.sumtext);
           }
         },
       });

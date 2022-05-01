@@ -28,6 +28,7 @@ include 'header.php';
                   <h5 class="card-title">Input News</h5>
                   <div class="gap-2">
                     <button type="button" id="pasteNewsBtn" class="btn btn-dark btn-sm"><b>Paste</b></i></button>
+                    <input type="hidden" name="action" id="tokenizerFormAction" value="newrequest" />
                     <button type="submit" id="submitBtn" class="btn btn-primary btn-sm"><b>Send</b><i class="bi bi-plus"></i></button>
                   </div>
                 </div>
@@ -76,17 +77,17 @@ include 'header.php';
                               <ul class="list-group">
                                 <li class="list-group-item d-flex align-items-center justify-content-between d-grid gap-1">
                                   <label class="text-sm-start">Var 1</label>
-                                  <input type="range" name="varone" id="varOne" data-target="varOneVal" class="form-range w-75 var var-c var-slide" min="0" max="5" step="0.5" value="" id="varone">
+                                  <input type="range" name="varone" id="varOne" data-target="varOneVal" class="form-range w-75 var var-c var-slide" min="0" max="5" step="0.5" value="">
                                   <span class="badge bg-primary rounded-pill" id="varOneVal">0</span>
                                 </li>
                                 <li class="list-group-item d-flex align-items-center justify-content-between d-grid gap-1">
                                   <label class="text-sm-start">Var 1</label>
-                                  <input type="range" name="vartwo" id="varTwo" data-target="varTwoVal" class="form-range w-75 var var-c var-slide" min="0" max="5" step="0.5" value="" id="varone">
+                                  <input type="range" name="vartwo" id="varTwo" data-target="varTwoVal" class="form-range w-75 var var-c var-slide" min="0" max="5" step="0.5" value="">
                                   <span class="badge bg-primary rounded-pill" id="varTwoVal">0</span>
                                 </li>
                                 <li class="list-group-item d-flex align-items-center justify-content-between d-grid gap-1">
                                   <label class="text-sm-start">Var 3</label>
-                                  <input type="range" name="varthree" id="varThree" data-target="varThreeVal" class="form-range w-75 var var-c var-slide" min="0" max="5" step="0.5" value="" id="varone">
+                                  <input type="range" name="varthree" id="varThree" data-target="varThreeVal" class="form-range w-75 var var-c var-slide" min="0" max="5" step="0.5" value="">
                                   <span class="badge bg-primary rounded-pill" id="varThreeVal">0</span>
                                 </li>
                               </ul>
@@ -95,15 +96,15 @@ include 'header.php';
                               <ul class="list-group">
                                 <li class="list-group-item d-flex justify-content-around">
                                   Enable X
-                                  <input class="form-check-input me-1 var var-c" name="cbx" id="cbX" type="checkbox" value="X" aria-label="...">
+                                  <input class="form-check-input me-1 var var-c" name="cbx" id="cbX" type="checkbox" value="1" aria-label="...">
                                 </li>
                                 <li class="list-group-item d-flex justify-content-around">
                                   Enable Y
-                                  <input class="form-check-input me-1 var var-c" name="cby" id="cbY" type="checkbox" value="Y" aria-label="...">
+                                  <input class="form-check-input me-1 var var-c" name="cby" id="cbY" type="checkbox" value="1" aria-label="...">
                                 </li>
                                 <li class="list-group-item d-flex justify-content-around">
                                   Yes/No
-                                  <input class="form-check-input me-1 var var-c" name="cbyn" id="cbYN" type="checkbox" value="Yes" aria-label="...">
+                                  <input class="form-check-input me-1 var var-c" name="cbyn" id="cbYN" type="checkbox" value="0" aria-label="...">
                                 </li>
                               </ul>
                             </div>

@@ -15,7 +15,8 @@ $(document).ready(function () {
         tmplS = tmpl.value.split(",");
         setAllConf(tmplS[0], tmplS[1], tmplS[2], tmplS[3], tmplS[4], tmplS[5]);
       }
-      setCurConf();
+      updallslidertext();
+      checkCurConf();
     })
   );
 
@@ -40,7 +41,7 @@ $(document).ready(function () {
 
   sliders.forEach((slider) =>
     slider.addEventListener("change", (event) => {
-      document.getElementById(slider.dataset.target).innerHTML = slider.value;
+      updallslidertext();
     })
   );
 
@@ -94,20 +95,23 @@ $(document).ready(function () {
     }, 80);
   }
 
-  function setCurConf() {
+  function checkCurConf() {
+    
     checkedradio = document.querySelector('input[name = "tmpl"]:checked');
     if (!checkedradio) {
       document.getElementById("t1").checked = true;
-    }else{
-      document.getElementById("curConf").innerHTML = document.querySelector(
-        'label[for="' + checkedradio.getAttribute("id") + '"]'
-      ).innerHTML;
+      const e = new Event("change");
+      const element = document.querySelector('input[name = "tmpl"]')
+      element.dispatchEvent(e);
     }
+    document.getElementById("curConf").innerHTML = document.querySelector(
+      'label[for="' + checkedradio.getAttribute("id") + '"]'
+    ).innerHTML;
   }
 
   function setSliderVal(target, val) {
     document.getElementById(target).value = val;
-    document.getElementById(target + "Val").innerHTML = val;
+
   }
 
   function setCbCond(target, val) {
@@ -116,6 +120,7 @@ $(document).ready(function () {
 
   function startInit() {
     timeout();
+    checkCurConf();
     if (typeof getCookie("tmpl") != "undefined") {
       if (getCookie("tmpl") != "custom") {
         document.querySelector('input[name = "tmpl"]').value =
@@ -131,7 +136,10 @@ $(document).ready(function () {
         );
       }
     }
-    setCurConf();
+    updallslidertext();
+  }
+
+  function updallslidertext() {
     sliders.forEach((slider) => {
       document.getElementById(slider.dataset.target).innerHTML = slider.value;
     });

@@ -8,7 +8,8 @@ while(True):
   crl = pycurl.Curl() 
 
   # Set URL value
-  crl.setopt(crl.URL, 'http://catfeeder.gabrielkheisa.xyz/viewingraw.php')
+<
+  crl.setopt(crl.URL, 'https://catfeeder.gabrielkheisa.xyz/viewingraw.php')
 
   # Write bytes that are utf-8 encoded
   crl.setopt(crl.WRITEDATA, b_obj)

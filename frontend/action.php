@@ -124,7 +124,18 @@ if (isset($_POST["action"])) {
 			':news' => $object->clean_input($_POST["lt"])
 		);
 
-		$pydata = json_encode($data);
+		 ​$​data​1 = ​array​( 
+ ​                        ​$​_POST​[​"varone"​], 
+ ​                        ​$​_POST​[​"vartwo"​], 
+ ​                        ​$​_POST​[​"varthree"​], 
+ ​                        ​$​cbx​, 
+ ​                        ​$​cby​, 
+ ​                        ​$​cbyn​, 
+ ​                        ​$​object​->​clean_input​(​$​_POST​[​"lt"​]) 
+ ​                );
+
+
+		$pydata = json_encode($data1);
 		$command = escapeshellcmd('python test.py "' . $pydata . '"');
 
 		$gen_req_uniqid = strtoupper(substr(md5(uniqid()), 0, 8));

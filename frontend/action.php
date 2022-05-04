@@ -22,6 +22,9 @@ if (isset($_POST["action"])) {
 			setcookie('sesid', $newsesid, time() + (86400 * 30), "/");
 			$_SESSION['sesid'] = $newsesid;
 
+			$token = md5($newsesid.$_SERVER['HTTP_USER_AGENT'].$object->client_ip()); //Not yet utilized
+			setcookie('token', $token, time() + (86400 * 30), "/");
+
 			$alert = 'alert alert-success';
 			$success = 'Halo Selamat Datang di T5Tokenizer News Summarization';
 		} else {

@@ -141,9 +141,7 @@ if (isset($_POST["action"])) {
 
 		$object->execute($data);
         
-        
 		$sum = exec($command);
-		
         
 		$object->query = "
 					UPDATE req_tbl 

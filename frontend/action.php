@@ -126,7 +126,7 @@ if (isset($_POST["action"])) {
         
         $pydata = json_encode($data);
         $enc_pydata = base64_encode($pydata);
-        $command = 'python test.py '.$enc_pydata;
+        $command = 'python3 test.py '.$enc_pydata;
 
 		$gen_req_uniqid = strtoupper(substr(md5(uniqid()), 0, 8));
         

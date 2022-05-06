@@ -22,6 +22,9 @@ if (isset($_POST["action"])) {
 			setcookie('sesid', $newsesid, time() + (86400 * 30), "/");
 			$_SESSION['sesid'] = $newsesid;
 
+			$token = md5($newsesid.$_SERVER['HTTP_USER_AGENT'].$object->client_ip()); //Not yet utilized
+			setcookie('token', $token, time() + (86400 * 30), "/");
+
 			$alert = 'alert alert-success';
 			$success = 'Halo Selamat Datang di T5Tokenizer News Summarization';
 		} else {
@@ -120,25 +123,26 @@ if (isset($_POST["action"])) {
 			':cbyn' => $cbyn,
 			':news' => $object->clean_input($_POST["lt"])
 		);
-
-		$pydata = json_encode($data);
-		$command = escapeshellcmd('python test.py "' . $pydata . '"');
+        
+        $pydata = json_encode($data);
+        $enc_pydata = base64_encode($pydata);
+        $command = 'python3 test.py '.$enc_pydata;
 
 		$gen_req_uniqid = strtoupper(substr(md5(uniqid()), 0, 8));
-
+        
+        
 		$object->query = "
 			INSERT INTO req_tbl 
 			(req_sesid, req_uniqid, req_var1, req_var2, req_var3, req_cb1, req_cb2, req_cb3, req_news) 
 			VALUES 
 			('".$_SESSION['sesid']."', '".$gen_req_uniqid."', :var1, :var2, :var3, :cbx, :cby, :cbyn, :news)
 			";
+		
 
 		$object->execute($data);
-
-		$sum = shell_exec($command);
-
-		sleep(1);
-
+        
+		$sum = exec($command);
+        
 		$object->query = "
 					UPDATE req_tbl 
 					SET req_sum = '".$sum."' 
@@ -146,7 +150,7 @@ if (isset($_POST["action"])) {
 					";
 
 		$object->execute();
-
+        
 		$alert = 'alert alert-success';
 		$success = 'Summary OK';
 		$output = array(

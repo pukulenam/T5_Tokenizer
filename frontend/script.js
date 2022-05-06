@@ -77,11 +77,17 @@ $(document).ready(function () {
   //End Event Listener
 
   //Start On Load Functions
+  clrFormSet();
   startInit();
   generalAjax('sessioncheck');
   //End On Load Functions
 
   //Start Functions Set
+
+  function clrFormSet(){
+    $('#tokenizerForm')[0].reset();
+    $('#sumText').val('');
+  }
 
   //Asynchronous update
   function timeout() {

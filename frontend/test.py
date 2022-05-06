@@ -1,8 +1,13 @@
+#!/usr/bin/env python3
 import requests
 import json
-
 import sys
-x = sys.argv[1:]
+import base64
+
+data = json.loads(base64.b64decode(sys.argv[1]))
+
+news = data[':news']
+
 API_URL = "https://api-inference.huggingface.co/models/csebuetnlp/mT5_multilingual_XLSum"
 headers = {"Authorization": f"Bearer {'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'}"}
 
@@ -11,7 +16,7 @@ def query(payload):
 	return response.json()
 	
 output = query({
-	"inputs" : ' '.join(x)
+	"inputs" : ' '.join(news)
 })
 
 print(output[0]['summary_text'])

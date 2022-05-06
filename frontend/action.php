@@ -125,7 +125,7 @@ if (isset($_POST["action"])) {
 		);
 
 		$pydata = json_encode($data);
-		$command = escapeshellcmd('python test.py "' . $pydata . '"');
+		$enc_pydata = base64_encode($pydata);
 
 		$gen_req_uniqid = strtoupper(substr(md5(uniqid()), 0, 8));
 
@@ -138,9 +138,9 @@ if (isset($_POST["action"])) {
 
 		$object->execute($data);
 
-		$sum = shell_exec($command);
+		$command = 'python test.py '.$enc_pydata;
 
-		sleep(1);
+		$sum = exec($command);
 
 		$object->query = "
 					UPDATE req_tbl 

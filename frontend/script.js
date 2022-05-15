@@ -62,7 +62,7 @@ $(document).ready(function () {
     alert("Text Copied");
   });
 
-  /*
+  
   //Disabled due by HTTPS Only, Uncomment only in Production.
   newsBtn = document.getElementById("pasteNewsBtn");
   newsBtn.addEventListener("click", function (event) {
@@ -72,7 +72,7 @@ $(document).ready(function () {
         (clipText) => (document.getElementById("newsText").value = clipText)
       );
   });
-  */
+  
 
   //End Event Listener
 

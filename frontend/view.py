@@ -1,5 +1,6 @@
 import pycurl
 import time
+import certifi
 from io import BytesIO 
 
 
@@ -7,8 +8,10 @@ while(True):
   b_obj = BytesIO() 
   crl = pycurl.Curl() 
 
+  # Get SSL certificate
+  crl.setopt(pycurl.CAINFO, certifi.where())
+
   # Set URL value
-<
   crl.setopt(crl.URL, 'https://catfeeder.gabrielkheisa.xyz/viewingraw.php')
 
   # Write bytes that are utf-8 encoded

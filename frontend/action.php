@@ -12,8 +12,6 @@ if (isset($_POST["action"])) {
 
 	if ($_POST["action"] == 'sessioncheck') {
 
-		$resp = '';
-
 		if (!isset($_COOKIE['sesid'])) {
 
 			$object->destroy_ses();
@@ -22,7 +20,7 @@ if (isset($_POST["action"])) {
 			setcookie('sesid', $newsesid, time() + (86400 * 30), "/");
 			$_SESSION['sesid'] = $newsesid;
 
-			$token = md5($newsesid.$_SERVER['HTTP_USER_AGENT'].$object->client_ip()); //Not yet utilized
+			$token = md5($newsesid . $_SERVER['HTTP_USER_AGENT'] . $object->client_ip()); //Not yet utilized
 			setcookie('token', $token, time() + (86400 * 30), "/");
 
 			$alert = 'alert alert-success';
@@ -76,7 +74,6 @@ if (isset($_POST["action"])) {
 					$alert = 'alert alert-success';
 					$success = 'Halo Selamat Datang Kembali';
 				}
-
 			} else {
 
 				$object->destroy_ses();
@@ -95,70 +92,129 @@ if (isset($_POST["action"])) {
 			'error'		=>	$error,
 			'success'	=>	$success
 		);
+	} elseif ($_POST["action"] == 'newrequest') {
 
-	}elseif ($_POST["action"] == 'newrequest') {
+		$resp_act = '';
 
-		if (!isset($_POST["cbx"])){
-			$cbx = 0;
-		}else{
-			$cbx = $_POST["cbx"];
-		}
-		if (!isset($_POST["cby"])){
-			$cby = 0;
-		}else{
-			$cby = $_POST["cby"];
-		}
-		if (!isset($_POST["cbyn"])){
-			$cbyn = 0;
-		}else{
-			$cbyn = $_POST["cbyn"];
-		}
+		if (isset($_SESSION['sesid'])) {
 
-		$data = array(
-			':var1' => $_POST["varone"],
-			':var2' => $_POST["vartwo"],
-			':var3' => $_POST["varthree"],
-			':cbx' => $cbx,
-			':cby' => $cby,
-			':cbyn' => $cbyn,
-			':news' => $object->clean_input($_POST["lt"])
-		);
-        
-        $pydata = json_encode($data);
-        $enc_pydata = base64_encode($pydata);
-        $command = 'python3 test.py '.$enc_pydata;
+			if (!isset($_POST["cbx"])) {
+				$cbx = 0;
+			} else {
+				$cbx = $_POST["cbx"];
+			}
+			if (!isset($_POST["cby"])) {
+				$cby = 0;
+			} else {
+				$cby = $_POST["cby"];
+			}
+			if (!isset($_POST["cbyn"])) {
+				$cbyn = 0;
+			} else {
+				$cbyn = $_POST["cbyn"];
+			}
 
-		$gen_req_uniqid = strtoupper(substr(md5(uniqid()), 0, 8));
-        
-        
-		$object->query = "
+			$data = array(
+				':var1' => $_POST["varone"],
+				':var2' => $_POST["vartwo"],
+				':var3' => $_POST["varthree"],
+				':cbx' => $cbx,
+				':cby' => $cby,
+				':cbyn' => $cbyn,
+				':news' => $object->clean_input($_POST["lt"])
+			);
+
+			$summarized_news = '';
+
+			function huggingface($news)
+			{
+				$url = "https://api-inference.huggingface.co/models/csebuetnlp/mT5_multilingual_XLSum";
+
+				$curl = curl_init($url);
+				curl_setopt($curl, CURLOPT_URL, $url);
+				curl_setopt($curl, CURLOPT_POST, true);
+				curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+				$headers = array(
+					"Authorization: Bearer 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",
+					"Content-Type: application/json",
+				);
+				curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+
+				$data = '{"inputs" : "' . $news . '"}';
+
+				curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+
+				$resp = json_decode(curl_exec($curl),true);
+				curl_close($curl);
+				foreach ($resp as $v){
+					$dec_v = $v['summary_text'];
+				}
+				return $dec_v;
+			};
+
+			$i = 0;
+			do {
+				$summarized_news = huggingface($data[':news']);
+				$i++;
+			} while (empty($summarized_news) && $i <= 3);
+
+			if (!empty($summarized_news)) {
+				$gen_req_uniqid = strtoupper(substr(md5(uniqid()), 0, 8));
+
+				$object->query = "
 			INSERT INTO req_tbl 
 			(req_sesid, req_uniqid, req_var1, req_var2, req_var3, req_cb1, req_cb2, req_cb3, req_news) 
 			VALUES 
-			('".$_SESSION['sesid']."', '".$gen_req_uniqid."', :var1, :var2, :var3, :cbx, :cby, :cbyn, :news)
+			('" . $_SESSION['sesid'] . "', '" . $gen_req_uniqid . "', :var1, :var2, :var3, :cbx, :cby, :cbyn, :news)
 			";
-		
 
-		$object->execute($data);
-        
-		$sum = exec($command);
-        
-		$object->query = "
+				$object->execute($data);
+
+				$object->query = "
 					UPDATE req_tbl 
-					SET req_sum = '".$sum."' 
+					SET req_sum = '" . $summarized_news . "' 
 					WHERE req_uniqid = '" . $gen_req_uniqid . "'
 					";
 
-		$object->execute();
-        
-		$alert = 'alert alert-success';
-		$success = 'Summary OK';
-		$output = array(
-			'sumtext'		=>  $sum,
-			'alert'		=>  $alert,
-			'error'		=>	$error,
-			'success'	=>	$success
-		);
+				$object->execute();
+
+				$resp_act = 'ok';
+				$alert = 'alert alert-success';
+				$success = 'Summary OK';
+
+				$output = array(
+					'respact'	=> $resp_act,
+					'sumtext'	=>  $summarized_news,
+					'alert'		=>  $alert,
+					'error'		=>	$error,
+					'success'	=>	$success
+				);
+			} else {
+				$resp_act = 'ok';
+				$alert = 'alert alert-danger';
+				$success = 'Request Returning Blank After ' . $i . ' Requests. Please Try Again.';
+
+				$output = array(
+					'respact'	=> $resp_act,
+					'alert'		=>  $alert,
+					'error'		=>	$error,
+					'success'	=>	$success
+				);
+			}
+		} else {
+
+			$resp_act = 'refresh';
+			$alert = 'alert alert-danger';
+			$error = 'Something Went Wrong';
+
+			$output = array(
+				'respact'	=> $resp_act,
+				'alert'		=>  $alert,
+				'error'		=>	$error,
+				'success'	=>	$success
+			);
+		}
 	}
 	echo json_encode($output);
 }

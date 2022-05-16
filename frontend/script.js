@@ -8,26 +8,33 @@ $(document).ready(function () {
   tmpls.forEach((tmpl) =>
     tmpl.addEventListener("change", (event) => {
       if (tmpl.value == "custom") {
-        varcs.forEach((varc) => {
+        if (checkCustConf()) {
+          setAllConf(
+            getCookie("varOne"),
+            getCookie("varTwo"),
+            getCookie("varThree"),
+            getCookie("CbX"),
+            getCookie("CbY"),
+            getCookie("CbYN")
+          );
+        } else {
           setAllConf("0", "0", "0", "", "", "");
-        });
+        }
       } else {
         tmplS = tmpl.value.split(",");
         setAllConf(tmplS[0], tmplS[1], tmplS[2], tmplS[3], tmplS[4], tmplS[5]);
       }
+      getconfstr();
       updallslidertext();
-      checkCurConf();
     })
   );
 
   dataVars.forEach((dataVar) =>
     dataVar.addEventListener("change", (event) => {
       if (dataVar.getAttribute("type") == "checkbox") {
-        if (dataVar.checked == false) {
-          val = "";
-        } else {
-          val = dataVar.checked;
-        }
+        val = dataVar.checked;
+      } else if (dataVar.getAttribute("type") == "radio") {
+        val = dataVar.getAttribute("id");
       } else {
         val = dataVar.value;
       }
@@ -62,7 +69,6 @@ $(document).ready(function () {
     alert("Text Copied");
   });
 
-  /*
   //Disabled due by HTTPS Only, Uncomment only in Production.
   newsBtn = document.getElementById("pasteNewsBtn");
   newsBtn.addEventListener("click", function (event) {
@@ -72,77 +78,77 @@ $(document).ready(function () {
         (clipText) => (document.getElementById("newsText").value = clipText)
       );
   });
-  */
 
   //End Event Listener
 
   //Start On Load Functions
   clrFormSet();
   startInit();
-  generalAjax('sessioncheck');
+  generalAjax("sessioncheck");
   //End On Load Functions
 
   //Start Functions Set
 
-  function clrFormSet(){
-    $('#tokenizerForm')[0].reset();
-    $('#sumText').val('');
-  }
-
-  //Asynchronous update
-  function timeout() {
-    setTimeout(function () {
-      if (getCookie("tmpl") == "custom" || getCookie("tmpl") == "") {
-        document.getElementById("cbX").checked = getCookie("cbX") == "true";
-        document.getElementById("cbY").checked = getCookie("cbY") == "true";
-        document.getElementById("cbYN").checked = getCookie("cbYN") == "true";
-      }
-      timeout();
-    }, 80);
+  function clrFormSet() {
+    $("#tokenizerForm")[0].reset();
+    $("#sumText").val("");
   }
 
   function checkCurConf() {
-    
-    checkedradio = document.querySelector('input[name = "tmpl"]:checked');
-    if (!checkedradio) {
+    if (typeof getCookie("tmpl") != "undefined") {
+      document.getElementById(getCookie("tmpl")).click();
+      if (getCookie("tmpl") != "tc") {
+      } else {
+        if (checkCustConf()) {
+          setAllConf(
+            getCookie("varOne"),
+            getCookie("varTwo"),
+            getCookie("varThree"),
+            getCookie("CbX"),
+            getCookie("CbY"),
+            getCookie("CbYN")
+          );
+        } else {
+          setAllConf("0", "0", "0", "", "", "");
+        }
+      }
+    } else {
       document.getElementById("t1").checked = true;
-      const e = new Event("change");
-      const element = document.querySelector('input[name = "tmpl"]')
-      element.dispatchEvent(e);
     }
+  }
+
+  function setSliderVal(target, val) {
+    document.getElementById(target).value = val;
+  }
+
+  function checkCustConf() {
+    if (
+      getCookie("var1") != "undefined" &&
+      getCookie("var2") != "undefined" &&
+      getCookie("var3") != "undefined" &&
+      getCookie("cbX") != "undefined" &&
+      getCookie("cbY") != "undefined" &&
+      getCookie("cbYN") != "undefined"
+    ) {
+      return 'false';
+    } else {
+      return 'true';
+    }
+  }
+
+  function getconfstr() {
+    checkedradio = document.querySelector('input[name = "tmpl"]:checked');
     document.getElementById("curConf").innerHTML = document.querySelector(
       'label[for="' + checkedradio.getAttribute("id") + '"]'
     ).innerHTML;
   }
 
-  function setSliderVal(target, val) {
-    document.getElementById(target).value = val;
-
-  }
-
   function setCbCond(target, val) {
-    document.getElementById(target).checked = val == "true";
+    document.getElementById(target).checked = val;
   }
 
   function startInit() {
-    timeout();
     checkCurConf();
-    if (typeof getCookie("tmpl") != "undefined") {
-      if (getCookie("tmpl") != "custom") {
-        document.querySelector('input[name = "tmpl"]').value =
-          getCookie("tmpl");
-      } else {
-        setAllConf(
-          getCookie("varOne"),
-          getCookie("varTwo"),
-          getCookie("varThree"),
-          getCookie("CbX"),
-          getCookie("CbY"),
-          getCookie("CbYN")
-        );
-      }
-    }
-    updallslidertext();
   }
 
   function updallslidertext() {
@@ -182,6 +188,11 @@ $(document).ready(function () {
     return "";
   }
 
+  function respAct(act){
+    if (act == "refresh"){
+      window.location.reload();
+    }
+  }
   //End Functions Set
 
   //Start Jquery AJAX Functions
@@ -192,10 +203,11 @@ $(document).ready(function () {
       url: "action.php",
       method: "POST",
       data: {
-        action: action
+        action: action,
       },
       dataType: "JSON",
       success: function (data) {
+        respAct(data.respact);
         if (data.error != "") {
           alertMsg.addClass(data.alert).html(data.error);
           setTimeout(function () {
@@ -241,7 +253,7 @@ $(document).ready(function () {
             setTimeout(function () {
               alertMsg.removeClass(data.alert).html("");
             }, 3000);
-            $('#sumText').val(data.sumtext);
+            $("#sumText").val(data.sumtext);
           }
         },
       });

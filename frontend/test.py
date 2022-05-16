@@ -6,6 +6,7 @@ import base64
 
 x = json.loads(base64.b64decode(sys.argv[1]))
 news = x[':news']
+var1 = x[':var1']
 
 API_URL = "https://api-inference.huggingface.co/models/csebuetnlp/mT5_multilingual_XLSum"
 headers = {"Authorization": f"Bearer {'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'}"}

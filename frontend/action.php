@@ -187,7 +187,7 @@ if (isset($_POST["action"])) {
 
 				$resp_act = 'ok';
 				$alert = 'alert alert-success';
-				$success = 'Summary OK';
+				$success = 'Request '.$gen_req_uniqid.' Return Success with ' . $i . ' tries';
 
 				$output = array(
 					'respact'	=> $resp_act,
@@ -199,7 +199,7 @@ if (isset($_POST["action"])) {
 			} else {
 				$resp_act = 'ok';
 				$alert = 'alert alert-danger';
-				$error = 'Request '.$gen_req_uniqid.' Returning Blank After ' . $i . ' Requests. Please Try Again.';
+				$error = 'Request '.$gen_req_uniqid.' Returning Blank After ' . $i . ' tries. Please Try Again.';
 
 				$output = array(
 					'respact'	=> $resp_act,

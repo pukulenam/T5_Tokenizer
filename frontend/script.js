@@ -208,7 +208,6 @@ $(document).ready(function () {
       },
       dataType: "JSON",
       success: function (data) {
-        respAct(data.respact);
         if (data.error != "") {
           alertMsg.addClass(data.alert).html(data.error);
           setTimeout(function () {
@@ -220,6 +219,10 @@ $(document).ready(function () {
             alertMsg.removeClass(data.alert).html("");
           }, 3000);
         }
+        setTimeout(function () {
+          respAct(data.respact);
+        }, 500);
+        
       },
     });
   }

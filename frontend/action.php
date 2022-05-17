@@ -161,8 +161,8 @@ if (isset($_POST["action"])) {
 
 			$i = 0;
 			do {
-				//$summarized_news = huggingface($data[':news']);
-				$summarized_news = exec($command);
+				$summarized_news = huggingface($data[':news']);
+				//$summarized_news = exec($command);
 				$i++;
 			} while (empty($summarized_news) && $i <= 3);
 

@@ -95,8 +95,9 @@ $(document).ready(function () {
   }
 
   function checkCurConf() {
-    if (typeof getCookie("tmpl") != "undefined") {
-      document.getElementById(getCookie("tmpl")).click();
+    tmpl = getCookie("tmpl");
+    if (tmpl != "") {
+      document.getElementById(tmpl).click();
       if (getCookie("tmpl") != "tc") {
       } else {
         if (checkCustConf()) {
@@ -113,7 +114,7 @@ $(document).ready(function () {
         }
       }
     } else {
-      document.getElementById("t1").checked = true;
+      document.getElementById("t1").click();
     }
   }
 
@@ -211,7 +212,7 @@ $(document).ready(function () {
         if (data.error != "") {
           alertMsg.addClass(data.alert).html(data.error);
           setTimeout(function () {
-            alertFormMsg.removeClass(data.alert).html("");
+            alertMsg.removeClass(data.alert).html("");
           }, 3000);
         } else {
           alertMsg.addClass(data.alert).html(data.success);
@@ -246,7 +247,7 @@ $(document).ready(function () {
           if (data.error != "") {
             alertMsg.addClass(data.alert).html(data.error);
             setTimeout(function () {
-              alertFormMsg.removeClass(data.alert).html("");
+              alertMsg.removeClass(data.alert).html("");
             }, 3000);
           } else {
             alertMsg.addClass(data.alert).html(data.success);

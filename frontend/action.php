@@ -98,6 +98,8 @@ if (isset($_POST["action"])) {
 
 		if (isset($_SESSION['sesid'])) {
 
+			$gen_req_uniqid = strtoupper(substr(md5(uniqid()), 0, 8));
+
 			if (!isset($_POST["cbx"])) {
 				$cbx = 0;
 			} else {
@@ -145,22 +147,26 @@ if (isset($_POST["action"])) {
 
 				curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
 
-				$resp = json_decode(curl_exec($curl),true);
+				$resp = json_decode(curl_exec($curl), true);
 				curl_close($curl);
-				foreach ($resp as $v){
+				foreach ($resp as $v) {
 					$dec_v = $v['summary_text'];
 				}
 				return $dec_v;
 			};
 
+			$pydata = json_encode($data);
+			$enc_pydata = base64_encode($pydata);
+			$command = 'python3 predict.py ' . $enc_pydata;
+
 			$i = 0;
 			do {
-				$summarized_news = huggingface($data[':news']);
+				//$summarized_news = huggingface($data[':news']);
+				$summarized_news = exec($command);
 				$i++;
 			} while (empty($summarized_news) && $i <= 3);
 
 			if (!empty($summarized_news)) {
-				$gen_req_uniqid = strtoupper(substr(md5(uniqid()), 0, 8));
 
 				$object->query = "
 			INSERT INTO req_tbl 
@@ -193,7 +199,7 @@ if (isset($_POST["action"])) {
 			} else {
 				$resp_act = 'ok';
 				$alert = 'alert alert-danger';
-				$success = 'Request Returning Blank After ' . $i . ' Requests. Please Try Again.';
+				$error = 'Request '.$gen_req_uniqid.' Returning Blank After ' . $i . ' Requests. Please Try Again.';
 
 				$output = array(
 					'respact'	=> $resp_act,

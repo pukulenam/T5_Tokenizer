@@ -4,8 +4,8 @@ import json
 import sys
 import base64
 
-x = sys.argv[1:]
-news = ' '.join(x)
+x = json.loads(base64.b64decode(sys.argv[1]))
+news = x[':news']
 
 tokenizer = AutoTokenizer.from_pretrained("assamim/assami-t5-small-finetuned-xsum")
 model = AutoModelForSeq2SeqLM.from_pretrained("assamim/assami-t5-small-finetuned-xsum", from_tf=True)

@@ -1,3 +1,7 @@
+# Hide all debugging logs from tensorflow
+import os
+os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
+
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 import re
 import json
@@ -7,8 +11,8 @@ import base64
 x = json.loads(base64.b64decode(sys.argv[1]))
 news = x[':news']
 
-tokenizer = AutoTokenizer.from_pretrained("assamim/assami-t5-small-finetuned-xsum")
-model = AutoModelForSeq2SeqLM.from_pretrained("assamim/assami-t5-small-finetuned-xsum", from_tf=True)
+tokenizer = AutoTokenizer.from_pretrained("assamim/t5-small-pukulenam-summarization")
+model = AutoModelForSeq2SeqLM.from_pretrained("assamim/t5-small-pukulenam-summarization", from_tf=True)
 
 
 WHITESPACE_HANDLER = lambda k: re.sub('\s+', ' ', re.sub('\n+', ' ', k.strip()))

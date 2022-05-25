@@ -12,14 +12,15 @@ x = json.loads(base64.b64decode(sys.argv[1]))
 news = x[':news']
 
 tokenizer = AutoTokenizer.from_pretrained("assamim/mt5-small-indonesian-sum")
-model = TFAutoModelForSeq2SeqLM.from_pretrained("assamim/mt5-small-indonesian-sum")
+model = AutoModelForSeq2SeqLM.from_pretrained("assamim/mt5-small-indonesian-sum", from_tf=True)
+
+# Regex for news
+WHITESPACE_HANDLER = lambda k: re.sub('\s+', ' ', re.sub('\n+', ' ', k.strip()))
 
 # ---------- 001 ----------
 
-# WHITESPACE_HANDLER = lambda k: re.sub('\s+', ' ', re.sub('\n+', ' ', k.strip()))
-
 # input_ids = tokenizer(
-#     [WHITESPACE_HANDLER(news)],
+#     [WHITESPACE_HANDLER(news4)],
 #     return_tensors="pt",
 #     padding="max_length",
 #     truncation=True,
@@ -28,9 +29,9 @@ model = TFAutoModelForSeq2SeqLM.from_pretrained("assamim/mt5-small-indonesian-su
 
 # output_ids = model.generate(
 #     input_ids=input_ids,
-#     max_length=84,
+#     max_length=50,
 #     no_repeat_ngram_size=2,
-#     num_beams=4
+#     num_beams=5
 # )[0]
 
 # summary = tokenizer.decode(
@@ -43,11 +44,11 @@ model = TFAutoModelForSeq2SeqLM.from_pretrained("assamim/mt5-small-indonesian-su
 
 # ---------- 002 ----------
 
-input_ids = tokenizer.encode('summarize: '+news, return_tensors='tf')
+input_ids = tokenizer.encode(WHITESPACE_HANDLER(news1), return_tensors='pt')
 summary_ids = model.generate(input_ids,
             min_length=20,
-            max_length=100,
-            num_beams=10,
+            max_length=200,
+            num_beams=7,
             repetition_penalty=2.5,
             length_penalty=1.0,
             early_stopping=True,

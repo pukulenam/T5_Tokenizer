@@ -11,8 +11,8 @@ import base64
 x = json.loads(base64.b64decode(sys.argv[1]))
 news = x[':news']
 
-tokenizer = AutoTokenizer.from_pretrained("assamim/mt5_small_text_summarization")
-model = AutoModelForSeq2SeqLM.from_pretrained("assamim/mt5_small_text_summarization", from_tf=True)
+tokenizer = AutoTokenizer.from_pretrained("./model/mt5_small_text_summarization")
+model = AutoModelForSeq2SeqLM.from_pretrained("./model/mt5_small_text_summarization", from_tf=True)
 
 # Regex for news
 WHITESPACE_HANDLER = lambda k: re.sub('\s+', ' ', re.sub('\n+', ' ', k.strip()))

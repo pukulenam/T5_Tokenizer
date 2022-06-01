@@ -25,11 +25,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $cbyn = $e['cbyn'];
                     $news = $e['news'];
 
-                $b_msg = 'Hey Thankyou for sending a request to us :D, Here is your request Details : v1='.$varone.' v2='.$vartwo.' v3='.$varthree.' cbx='.$cbx.' cby='.$cby.' cbyn='.$cbyn.' news='.$news;
+                $b_msg = 'Request OK';
+                $b_resp = 'Hey Thankyou for sending a request to us :D, Here is your request Details : v1='.$varone.' v2='.$vartwo.' v3='.$varthree.' cbx='.$cbx.' cby='.$cby.' cbyn='.$cbyn.' news='.$news;
                 
                 $status = '1';
                 $msg = $b_msg;
-                $resp = '';
+                $resp = $b_resp;
             } else {
                 $status = '0';
                 $msg = 'Data not Initialized';

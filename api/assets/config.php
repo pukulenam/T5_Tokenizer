@@ -68,17 +68,18 @@ class Syst
 
     function eligible($type, $limit, $count)
     {
-        if ($type == '1') {
-            return true;
-        } else if ($type == '2') {
+        if ($type == 1) {
+            $r = true;
+        } else if ($type == 2) {
             if ($count < $limit) {
-                return true;
+                $r = true;
             } else {
-                return 'Request Limit Exceeded';
+                $r = 'Request Limit Exceeded';
             }
         } else {
-            return 'Something Went Wrong';
+            $r = 'Something Went Wrong';
         }
+        return $r;
     }
 
     function checkapi($token)
@@ -103,7 +104,8 @@ class Syst
 
             $el = $this->eligible($type, $limit, $count);
 
-            if ($el) {
+            if ($el === true) {
+                $this->makelog($sesid,'Making a New Request');
                 return true;
             } else {
                 return $el;
@@ -112,4 +114,22 @@ class Syst
             return 'Invalid Token';
         }
     }
+
+    function makelog($sesid,$activity){
+		$data = array(
+			':user_sesid' => $sesid,
+			':user_ip' => $this->client_ip(),
+			':user_agent' => $_SERVER['HTTP_USER_AGENT'],
+			':user_activity' => $activity
+		);
+
+		$this->query = "
+		INSERT INTO log_tbl 
+		(user_sesid, user_ip, user_agent, user_activity) 
+		VALUES 
+		(:user_sesid, :user_ip, :user_agent, :user_activity)
+		";
+
+		$this->execute($data);
+	}
 }

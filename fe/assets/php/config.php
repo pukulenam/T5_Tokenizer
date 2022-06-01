@@ -11,7 +11,7 @@ class Syst
 
 	public function __construct()
 	{
-		$this->connect = new PDO("mysql:host=localhost;dbname=t5tokenizer", "t5tokenizer", "t5tokenizer");
+		$this->connect = new PDO("mysql:host=localhost;dbname=t5test", "root", "");
 
 		date_default_timezone_set('Asia/Jakarta');
 
@@ -84,6 +84,24 @@ class Syst
 		return $ip;
 	}
 
+	function makelog($activity){
+		$data = array(
+			':user_sesid' => $_SESSION['sesid'],
+			':user_ip' => $this->client_ip(),
+			':user_agent' => $_SERVER['HTTP_USER_AGENT'],
+			':user_activity' => $activity
+		);
+
+		$this->query = "
+		INSERT INTO log_tbl 
+		(user_sesid, user_ip, user_agent, user_activity) 
+		VALUES 
+		(:user_sesid, :user_ip, :user_agent, :user_activity)
+		";
+
+		$this->execute($data);
+	}
+
 	function newuser(){
 
 			$newsesid = substr(md5(uniqid()), 0, 8);
@@ -100,22 +118,6 @@ class Syst
 				";
 
 			$this->execute($data);
-
-			$data1 = array(
-				':user_sesid' => $newsesid,
-				':user_ip' => $this->client_ip(),
-				':user_agent' => $_SERVER['HTTP_USER_AGENT'],
-				':user_activity' => 'New Account Created'
-			);
-
-			$this->query = "
-				INSERT INTO log_tbl 
-				(user_sesid, user_ip, user_agent, user_activity) 
-				VALUES 
-				(:user_sesid, :user_ip, :user_agent, :user_activity)
-				";
-
-			$this->execute($data1);
 
 			return $newsesid;
 	}

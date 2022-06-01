@@ -201,7 +201,7 @@ $(document).ready(function () {
 
   function generalAjax(action) {
     $.ajax({
-      url: "action.php",
+      url: "action",
       method: "POST",
       data: {
         action: action,
@@ -235,7 +235,7 @@ $(document).ready(function () {
       event.stopPropagation();
     } else {
       $.ajax({
-        url: "action.php",
+        url: "action",
         method: "POST",
         data: new FormData(this),
         dataType: "json",

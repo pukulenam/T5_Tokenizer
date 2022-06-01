@@ -55,21 +55,7 @@ if (isset($_POST["action"])) {
 
 					$object->execute();
 
-					$data = array(
-						':user_sesid' => $sesid,
-						':user_ip' => $object->client_ip(),
-						':user_agent' => $_SERVER['HTTP_USER_AGENT'],
-						':user_activity' => 'ReLogin'
-					);
-
-					$object->query = "
-					INSERT INTO log_tbl 
-					(user_sesid, user_ip, user_agent, user_activity) 
-					VALUES 
-					(:user_sesid, :user_ip, :user_agent, :user_activity)
-					";
-
-					$object->execute($data);
+					$object->makelog('User Relogin');
 
 					$alert = 'alert alert-success';
 					$success = 'Halo Selamat Datang Kembali';
@@ -80,6 +66,7 @@ if (isset($_POST["action"])) {
 
 				$newsesid = $object->newuser();
 				$_SESSION['sesid'] = $newsesid;
+				$object->makelog('New User : '.$newsesid);
 				setcookie('sesid', $newsesid, time() + (86400 * 30), "/");
 
 				$alert = 'alert alert-success';
@@ -99,6 +86,10 @@ if (isset($_POST["action"])) {
 		if (isset($_SESSION['sesid'])) {
 
 			$gen_req_uniqid = strtoupper(substr(md5(uniqid()), 0, 8));
+
+			$logdata = 'New Request : '.$gen_req_uniqid;
+
+			$object->makelog($logdata);
 
 			if (!isset($_POST["cbx"])) {
 				$cbx = 0;
@@ -159,23 +150,24 @@ if (isset($_POST["action"])) {
 			$enc_pydata = base64_encode($pydata);
 			$command = 'python3 predict.py ' . $enc_pydata;
 
-			$i = 0;
-			do {
-				$summarized_news = huggingface($data[':news']);
-				//$summarized_news = exec($command);
-				$i++;
-			} while (empty($summarized_news) && $i <= 3);
-
-			if (!empty($summarized_news)) {
-
-				$object->query = "
+			$object->query = "
 			INSERT INTO req_tbl 
 			(req_sesid, req_uniqid, req_var1, req_var2, req_var3, req_cb1, req_cb2, req_cb3, req_news) 
 			VALUES 
 			('" . $_SESSION['sesid'] . "', '" . $gen_req_uniqid . "', :var1, :var2, :var3, :cbx, :cby, :cbyn, :news)
 			";
 
-				$object->execute($data);
+			$object->execute($data);
+
+			$i = 0;
+			do {
+				$summarized_news = 'test ok';
+				//$summarized_news = huggingface($data[':news']);
+				//$summarized_news = exec($command);
+				$i++;
+			} while (empty($summarized_news) && $i <= 3);
+
+			if (!empty($summarized_news)) {
 
 				$object->query = "
 					UPDATE req_tbl 

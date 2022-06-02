@@ -60,4 +60,4 @@ summary_ids = model.generate(input_ids,
             top_p = 0.95)
 
 summary_text = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
-print(summary_text)
+print("Intinya... "+summary_text)

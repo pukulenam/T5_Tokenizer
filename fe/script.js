@@ -79,6 +79,28 @@ $(document).ready(function () {
       );
   });
 
+  //Translate
+  translateBtn = document.getElementById("translateNewsBtn");
+  translateBtn.addEventListener("click", translate("newsText"));
+  function translate(the_id) {
+    str = document.getElementById(the_id).value
+    if (str.length == 0) {
+      document.getElementById(the_id).value = "";
+      return;
+    } else {
+      var xmlhttp = new XMLHttpRequest();
+      xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          document.getElementById(the_id).value = this.responseText;
+        }
+      };
+      xmlhttp.open("GET", "translate.php?q=" + str, true);
+      xmlhttp.send();
+    }
+  }
+
+  
+
   //End Event Listener
 
   //Start On Load Functions

@@ -27,6 +27,7 @@ include 'header.php';
                 <div class="d-flex justify-content-between align-items-center">
                   <h5 class="card-title">Input News</h5>
                   <div class="gap-2">
+                    <button type="button" id="translateNewsBtn" class="btn btn-dark btn-sm"><b>Paste</b></i></button>
                     <button type="button" id="pasteNewsBtn" class="btn btn-dark btn-sm"><b>Paste</b></i></button>
                     <input type="hidden" name="action" id="tokenizerFormAction" value="newrequest" />
                     <button type="submit" id="submitBtn" class="btn btn-primary btn-sm"><b>Send</b><i class="bi bi-plus"></i></button>

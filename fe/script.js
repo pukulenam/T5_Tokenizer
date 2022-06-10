@@ -79,28 +79,6 @@ $(document).ready(function () {
       );
   });
 
-  //Translate
-  translateBtn = document.getElementById("translateNewsBtn");
-  translateBtn.addEventListener("click", translate("newsText"));
-  function translate(the_id) {
-    str = document.getElementById(the_id).value
-    if (str.length == 0) {
-      document.getElementById(the_id).value = "";
-      return;
-    } else {
-      var xmlhttp = new XMLHttpRequest();
-      xmlhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-          document.getElementById(the_id).value = this.responseText;
-        }
-      };
-      xmlhttp.open("GET", "translate.php?q=" + btoa(str), true);
-      xmlhttp.send();
-    }
-  }
-
-  
-
   //End Event Listener
 
   //Start On Load Functions
@@ -216,11 +194,6 @@ $(document).ready(function () {
       window.location.reload();
     }
   }
-
-  hash_output = String(CryptoJS.AES.encrypt(String(parseInt(Math.random()*1000000)), String(time_hash)));
-  sliced_output = hash_output.slice(-14,-1);
-  setCookie("randomhash", sliced_output);
-
   //End Functions Set
 
   //Start Jquery AJAX Functions

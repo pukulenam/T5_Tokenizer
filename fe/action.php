@@ -162,8 +162,8 @@ if (isset($_POST["action"])) {
 			$i = 0;
 			do {
 				$summarized_news = 'test ok';
-				$summarized_news = huggingface($data[':news']);
-				$summarized_news = exec($command);
+				//$summarized_news = huggingface($data[':news']);
+				//$summarized_news = exec($command);
 				$i++;
 			} while (empty($summarized_news) && $i <= 3);
 
@@ -173,19 +173,9 @@ if (isset($_POST["action"])) {
 					UPDATE req_tbl 
 					SET req_sum = '" . $summarized_news . "' 
 					WHERE req_uniqid = '" . $gen_req_uniqid . "'
-					
-					INSERT INTO translate (user_sesid, indonesia) VALUES ('". $_SESSION['sesid'] ."', '" . $summarized_news . "')
 					";
 
 				$object->execute();
-
-				$object->query = "
-					SELECT english FROM translate WHERE user_sesid ='". $_SESSION['sesid'] ."' 
-					";
-
-				$object->execute();
-
-				$english = $object->fetch();
 
 				$resp_act = 'ok';
 				$alert = 'alert alert-success';
@@ -194,8 +184,6 @@ if (isset($_POST["action"])) {
 				$output = array(
 					'respact'	=> $resp_act,
 					'sumtext'	=>  $summarized_news,
-					'indonesia'	=>  $summarized_news,
-					'english'	=>  $english,
 					'alert'		=>  $alert,
 					'error'		=>	$error,
 					'success'	=>	$success

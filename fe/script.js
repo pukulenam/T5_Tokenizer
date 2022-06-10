@@ -94,7 +94,7 @@ $(document).ready(function () {
           document.getElementById(the_id).value = this.responseText;
         }
       };
-      xmlhttp.open("GET", "translate.php?q=" + str, true);
+      xmlhttp.open("GET", "translate.php?q=" + btoa(str), true);
       xmlhttp.send();
     }
   }

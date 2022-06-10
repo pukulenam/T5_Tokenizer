@@ -4,26 +4,55 @@ include('../assets/config.php');
 
 $object = new Syst;
 
+function getAuthorizationHeader(){
+    $headers = null;
+    if (isset($_SERVER['Authorization'])) {
+        $headers = trim($_SERVER["Authorization"]);
+    }
+    else if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
+        $headers = trim($_SERVER["HTTP_AUTHORIZATION"]);
+    } elseif (function_exists('apache_request_headers')) {
+        $requestHeaders = apache_request_headers();
+        $requestHeaders = array_combine(array_map('ucwords', array_keys($requestHeaders)), array_values($requestHeaders));
+        if (isset($requestHeaders['Authorization'])) {
+            $headers = trim($requestHeaders['Authorization']);
+        }
+    }
+    return $headers;
+}
+
+function getBearerToken() {
+    $headers = getAuthorizationHeader();
+    if (!empty($headers)) {
+        if (preg_match('/Bearer\s(\S+)/', $headers, $matches)) {
+            return $matches[1];
+        }
+    }
+    return null;
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (isset($_POST["token"])) {
+    $bearer_token = getBearerToken();
+    if (!empty($bearer_token)) {
 
         $status = '';
         $msg = '';
         $resp = '';
-
-        $do_checkapi = $object->checkapi($_POST["token"]);
+        $do_checkapi = $object->checkapi($bearer_token);
         if ($do_checkapi === true) {
-            if (isset($_POST["data"])) {
 
-                $e = json_decode($_POST["data"], true);
+            $req_body = file_get_contents('php://input');
+            $dec_body = json_decode($req_body, true);
+            $data = $dec_body["data"];
+            if (isset($data)) {
 
-                $varone = $e['varone'];
-                    $vartwo = $e['vartwo'];
-                    $varthree = $e['varthree'];
-                    $cbx = $e['cbx'];
-                    $cby = $e['cby'];
-                    $cbyn = $e['cbyn'];
-                    $news = $e['news'];
+                $varone = $data['varone'];
+                    $vartwo = $data['vartwo'];
+                    $varthree = $data['varthree'];
+                    $cbx = $data['cbx'];
+                    $cby = $data['cby'];
+                    $cbyn = $data['cbyn'];
+                    $news = $data['news'];
 
                 $b_msg = 'Request OK';
                 $b_resp = 'Hey Thankyou for sending a request to us :D, Here is your request Details : v1='.$varone.' v2='.$vartwo.' v3='.$varthree.' cbx='.$cbx.' cby='.$cby.' cbyn='.$cbyn.' news='.$news;
@@ -69,7 +98,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $token = 'vvv';
 
     $output = array(
-        'token'    =>  $token,
         'data'      =>  $data
     );
     $encoded =  json_encode($output);
@@ -80,5 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     echo '<br>';
     $dt = $in['data']['news'];
     echo $dt;
+
+    echo json_encode($data);
 
 }

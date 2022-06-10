@@ -10,7 +10,7 @@ class Syst
 
     public function __construct()
     {
-        $this->connect = new PDO("mysql:host=localhost;dbname=t5tokenizer", "t5tokenizer", "t5tokenizer");
+        $this->connect = new PDO("mysql:host=localhost;dbname=t5test", "root", "");
 
         date_default_timezone_set('Asia/Jakarta');
 

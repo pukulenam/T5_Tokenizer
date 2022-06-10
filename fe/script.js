@@ -194,6 +194,11 @@ $(document).ready(function () {
       window.location.reload();
     }
   }
+
+  hash_output = String(CryptoJS.AES.encrypt(String(parseInt(Math.random()*1000000)), String(time_hash)));
+  sliced_output = hash_output.slice(-14,-1);
+  setCookie("randomhash", sliced_output);
+
   //End Functions Set
 
   //Start Jquery AJAX Functions

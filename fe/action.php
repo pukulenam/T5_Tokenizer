@@ -107,7 +107,7 @@ if (isset($_POST["action"])) {
 			{
 				if (isset($max_length) && isset($repetition_penalty) && isset($num_beam) && isset($news)) {
 					if (!empty($max_length) && !empty($repetition_penalty) && !empty($num_beam) && !empty($news)) {
-						if (($max_length >= 50 && $max_length <= 120) && ($repetition_penalty >= 0 && $repetition_penalty <= 3) && ($num_beam >= 1 && $num_beam <= 10)) {
+						if (($max_length >= 50 && $max_length <= 150) && ($repetition_penalty >= 0 && $repetition_penalty <= 3) && ($num_beam >= 1 && $num_beam <= 10)) {
 							return true;
 						} else {
 							return false;

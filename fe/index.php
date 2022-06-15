@@ -27,7 +27,6 @@ include 'header.php';
                 <div class="d-flex justify-content-between align-items-center">
                   <h5 class="card-title">Input News</h5>
                   <div class="gap-2">
-                    <button type="button" id="translateNewsBtn" class="btn btn-dark btn-sm"><b>Translate</b></i></button>
                     <button type="button" id="pasteNewsBtn" class="btn btn-dark btn-sm"><b>Paste</b></i></button>
                     <input type="hidden" name="action" id="tokenizerFormAction" value="newrequest" />
                     <button type="submit" id="submitBtn" class="btn btn-primary btn-sm"><b>Send</b><i class="bi bi-plus"></i></button>
@@ -52,19 +51,19 @@ include 'header.php';
                         <div class="d-flex justify-content-center">
                           <div class="gap-2">
                             <div class="form-check form-check-inline">
-                              <input class="form-check-input var tmpl" type="radio" id="t1" name="tmpl" value="1,0.5,2,true,true,">
+                              <input class="form-check-input var tmpl" type="radio" id="t1" name="tmpl" value="120,2.5,7,true">
                               <label class="form-check-label text-md-start" for="t1">Default</label>
                             </div>
                             <div class="form-check form-check-inline">
-                              <input class="form-check-input var tmpl" type="radio" id="t2" name="tmpl" value="2,1,1.5,,true,true">
+                              <input class="form-check-input var tmpl" type="radio" id="t2" name="tmpl" value="100,2,9,">
                               <label class="form-check-label text-md-start" for="t2">Template 2</label>
                             </div>
                             <div class="form-check form-check-inline">
-                              <input class="form-check-input var tmpl" type="radio" id="t3" name="tmpl" value="3,2,1.5,,true,">
+                              <input class="form-check-input var tmpl" type="radio" id="t3" name="tmpl" value="80,1,4,">
                               <label class="form-check-label text-md-start" for="t3">Template 3</label>
                             </div>
                             <div class="form-check form-check-inline">
-                              <input class="form-check-input var tmpl" type="radio" id="t4" name="tmpl" value="4,1,0.5,true,,true">
+                              <input class="form-check-input var tmpl" type="radio" id="t4" name="tmpl" value="50,3,3,true">
                               <label class="form-check-label text-md-start" for="t4">Template 4</label>
                             </div>
                             <div class="form-check form-check-inline">
@@ -77,18 +76,18 @@ include 'header.php';
                             <div class="col-md-8">
                               <ul class="list-group">
                                 <li class="list-group-item d-flex align-items-center justify-content-between d-grid gap-1">
-                                  <label class="text-sm-start">Var 1</label>
-                                  <input type="range" name="varone" id="varOne" data-target="varOneVal" class="form-range w-75 var var-c var-slide" min="0" max="5" step="0.5" value="">
+                                  <label class="text-sm-start">Max Length</label>
+                                  <input type="range" name="varone" id="varOne" data-target="varOneVal" class="form-range w-75 var var-c var-slide" min="50" max="120" step="1" value="">
                                   <span class="badge bg-primary rounded-pill" id="varOneVal">0</span>
                                 </li>
                                 <li class="list-group-item d-flex align-items-center justify-content-between d-grid gap-1">
-                                  <label class="text-sm-start">Var 1</label>
-                                  <input type="range" name="vartwo" id="varTwo" data-target="varTwoVal" class="form-range w-75 var var-c var-slide" min="0" max="5" step="0.5" value="">
+                                  <label class="text-sm-start">Repetition Penalty</label>
+                                  <input type="range" name="vartwo" id="varTwo" data-target="varTwoVal" class="form-range w-75 var var-c var-slide" min="0" max="3" step="0.5" value="">
                                   <span class="badge bg-primary rounded-pill" id="varTwoVal">0</span>
                                 </li>
                                 <li class="list-group-item d-flex align-items-center justify-content-between d-grid gap-1">
-                                  <label class="text-sm-start">Var 3</label>
-                                  <input type="range" name="varthree" id="varThree" data-target="varThreeVal" class="form-range w-75 var var-c var-slide" min="0" max="5" step="0.5" value="">
+                                  <label class="text-sm-start">Num Beam</label>
+                                  <input type="range" name="varthree" id="varThree" data-target="varThreeVal" class="form-range w-75 var var-c var-slide" min="1" max="10" step="1" value="">
                                   <span class="badge bg-primary rounded-pill" id="varThreeVal">0</span>
                                 </li>
                               </ul>
@@ -96,16 +95,8 @@ include 'header.php';
                             <div class="col-md-4">
                               <ul class="list-group">
                                 <li class="list-group-item d-flex justify-content-around">
-                                  Enable X
+                                  Early Stopping
                                   <input class="form-check-input me-1 var var-c" name="cbx" id="cbX" type="checkbox" value="1" aria-label="...">
-                                </li>
-                                <li class="list-group-item d-flex justify-content-around">
-                                  Enable Y
-                                  <input class="form-check-input me-1 var var-c" name="cby" id="cbY" type="checkbox" value="1" aria-label="...">
-                                </li>
-                                <li class="list-group-item d-flex justify-content-around">
-                                  Yes/No
-                                  <input class="form-check-input me-1 var var-c" name="cbyn" id="cbYN" type="checkbox" value="0" aria-label="...">
                                 </li>
                               </ul>
                             </div>
@@ -125,6 +116,7 @@ include 'header.php';
               <div class="d-flex justify-content-between align-items-center">
                 <h5 class="card-title">Summarized News</h5>
                 <div class="gap-2">
+                <button style="display:none;" type="button" id="translateNewsBtn" class="btn btn-dark btn-sm"><b>Translate</b></i></button>
                   <button type="button" id="copySumBtn" class="btn btn-dark btn-sm"><b>Copy</b></i></button>
                 </div>
               </div>

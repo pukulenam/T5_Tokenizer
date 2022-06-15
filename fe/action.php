@@ -1,6 +1,7 @@
 <?php
-
+require '../vendor/autoload.php';
 include('assets/php/config.php');
+use Google\Cloud\Translate\V2\TranslateClient;
 
 $object = new Syst;
 
@@ -66,7 +67,7 @@ if (isset($_POST["action"])) {
 
 				$newsesid = $object->newuser();
 				$_SESSION['sesid'] = $newsesid;
-				$object->makelog('New User : '.$newsesid);
+				$object->makelog('New User : ' . $newsesid);
 				setcookie('sesid', $newsesid, time() + (86400 * 30), "/");
 
 				$alert = 'alert alert-success';
@@ -87,7 +88,7 @@ if (isset($_POST["action"])) {
 
 			$gen_req_uniqid = strtoupper(substr(md5(uniqid()), 0, 8));
 
-			$logdata = 'New Request : '.$gen_req_uniqid;
+			$logdata = 'New Request : ' . $gen_req_uniqid;
 
 			$object->makelog($logdata);
 
@@ -96,25 +97,35 @@ if (isset($_POST["action"])) {
 			} else {
 				$cbx = $_POST["cbx"];
 			}
-			if (!isset($_POST["cby"])) {
-				$cby = 0;
-			} else {
-				$cby = $_POST["cby"];
-			}
-			if (!isset($_POST["cbyn"])) {
-				$cbyn = 0;
-			} else {
-				$cbyn = $_POST["cbyn"];
-			}
+
+			$max_length = $_POST["varone"];
+			$repetition_penalty = $_POST["vartwo"];
+			$num_beam = $_POST["varthree"];
+			$news = $object->clean_input($_POST["lt"]);
+
+			function checkinput($max_length, $repetition_penalty, $num_beam, $news)
+			{
+				if (isset($max_length) && isset($repetition_penalty) && isset($num_beam) && isset($news)) {
+					if (!empty($max_length) && !empty($repetition_penalty) && !empty($num_beam) && !empty($news)) {
+						if (($max_length >= 50 && $max_length <= 120) && ($repetition_penalty >= 0 && $repetition_penalty <= 3) && ($num_beam >= 1 && $num_beam <= 10)) {
+							return true;
+						} else {
+							return false;
+						}
+					} else {
+						return false;
+					}
+				} else {
+					return false;
+				}
+			};
 
 			$data = array(
-				':var1' => $_POST["varone"],
-				':var2' => $_POST["vartwo"],
-				':var3' => $_POST["varthree"],
-				':cbx' => $cbx,
-				':cby' => $cby,
-				':cbyn' => $cbyn,
-				':news' => $object->clean_input($_POST["lt"])
+				':max_length' => $_POST["varone"],
+				':repetition_penalty' => $_POST["vartwo"],
+				':num_beam' => $_POST["varthree"],
+				':early_stopping' => $cbx,
+				':news' => $news
 			);
 
 			$summarized_news = '';
@@ -150,49 +161,62 @@ if (isset($_POST["action"])) {
 			$enc_pydata = base64_encode($pydata);
 			$command = 'python3 predict.py ' . $enc_pydata;
 
-			$object->query = "
+			if (checkinput($max_length, $repetition_penalty, $num_beam, $news)) {
+				$object->query = "
 			INSERT INTO req_tbl 
-			(req_sesid, req_uniqid, req_var1, req_var2, req_var3, req_cb1, req_cb2, req_cb3, req_news) 
+			(req_sesid, req_uniqid, req_var1, req_var2, req_var3, req_cb1, req_news) 
 			VALUES 
-			('" . $_SESSION['sesid'] . "', '" . $gen_req_uniqid . "', :var1, :var2, :var3, :cbx, :cby, :cbyn, :news)
+			('" . $_SESSION['sesid'] . "', '" . $gen_req_uniqid . "', :max_length, :repetition_penalty, :num_beam, :early_stopping, :news)
 			";
 
-			$object->execute($data);
+				$object->execute($data);
 
-			$i = 0;
-			do {
-				$summarized_news = 'test ok';
-				//$summarized_news = huggingface($data[':news']);
-				//$summarized_news = exec($command);
-				$i++;
-			} while (empty($summarized_news) && $i <= 3);
+				$i = 0;
 
-			if (!empty($summarized_news)) {
+				do {
+					$summarized_news = 'Testing OK';
+					//$summarized_news = huggingface($data[':news']);
+					//$summarized_news = exec($command);
+					$i++;
+				} while (empty($summarized_news) && $i <= 3);
 
-				$object->query = "
+				if (!empty($summarized_news)) {
+
+					$object->query = "
 					UPDATE req_tbl 
 					SET req_sum = '" . $summarized_news . "' 
 					WHERE req_uniqid = '" . $gen_req_uniqid . "'
 					";
 
-				$object->execute();
+					$object->execute();
 
-				$resp_act = 'ok';
-				$alert = 'alert alert-success';
-				$success = 'Request '.$gen_req_uniqid.' Return Success with ' . $i . ' tries';
+					$resp_act = 'ok';
+					$alert = 'alert alert-success';
+					$success = 'Request ' . $gen_req_uniqid . ' Return Success with ' . $i . ' tries';
 
-				$output = array(
-					'respact'	=> $resp_act,
-					'sumtext'	=>  $summarized_news,
-					'alert'		=>  $alert,
-					'error'		=>	$error,
-					'success'	=>	$success
-				);
+					$output = array(
+						'respact'	=> $resp_act,
+						'sumtext'	=>  $summarized_news,
+						'requniqid' => $gen_req_uniqid,
+						'alert'		=>  $alert,
+						'error'		=>	$error,
+						'success'	=>	$success
+					);
+				} else {
+					$resp_act = 'ok';
+					$alert = 'alert alert-danger';
+					$error = 'Request ' . $gen_req_uniqid . ' Returning Blank After ' . $i . ' tries. Please Try Again.';
+					$output = array(
+						'respact'	=> $resp_act,
+						'alert'		=>  $alert,
+						'error'		=>	$error,
+						'success'	=>	$success
+					);
+				}
 			} else {
 				$resp_act = 'ok';
 				$alert = 'alert alert-danger';
-				$error = 'Request '.$gen_req_uniqid.' Returning Blank After ' . $i . ' tries. Please Try Again.';
-
+				$error = 'Invalid Configuration or Data';
 				$output = array(
 					'respact'	=> $resp_act,
 					'alert'		=>  $alert,
@@ -213,6 +237,55 @@ if (isset($_POST["action"])) {
 				'success'	=>	$success
 			);
 		}
-	}
+	
+
+	}else if($_POST["action"] == 'trnsumnews'){
+		if (isset($_POST["requniqid"]) && !empty($_POST["requniqid"])){
+
+			$requniqid = $object->clean_input($_POST['requniqid']);
+
+			$object->query = "
+				SELECT req_tbl.req_sesid, req_tbl.req_uniqid, req_tbl.req_sum
+				FROM req_tbl
+				WHERE req_sesid = '".$_SESSION['sesid']."' AND req_uniqid = '".$_POST['requniqid']."'
+				";
+
+			$object->execute();
+
+			if ($object->row_count() > 0) {
+				$result = $object->get_result();
+				foreach ($result as $row) {
+					$news_sum = $row['req_sum'];
+				}
+
+			}
+
+			$translate = new TranslateClient([
+				'keyFile' => json_decode(file_get_contents('../g_assets/t5tokenizer-3f80d3cec1eb.json'), true)
+			]);
+			
+			$source_body = $news_sum;
+			$source_lang = 'en';
+			$target_lang = 'id';
+			
+			$resultnewstrans = $translate->translate($source_body, [
+				'source' => $source_lang,
+				'target' => $target_lang
+			]);
+
+			$resp_act = 'ok';
+			$alert = 'alert alert-success';
+			$success = 'News Translated';
+
+			$output = array(
+				'respact'	=> $resp_act,
+				'trnslnews' => $resultnewstrans['text'],
+				'alert'		=>  $alert,
+				'error'		=>	$error,
+				'success'	=>	$success
+			);
+
+		}
+	}		
 	echo json_encode($output);
 }

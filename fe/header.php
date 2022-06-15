@@ -16,11 +16,6 @@
   <!-- vendorm CSS Files -->
   <link href="assets/vendorm/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/vendorm/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendorm/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="assets/vendorm/quill/quill.snow.css" rel="stylesheet">
-  <link href="assets/vendorm/quill/quill.bubble.css" rel="stylesheet">
-  <link href="assets/vendorm/remixicon/remixicon.css" rel="stylesheet">
-  <link href="assets/vendorm/simple-datatables/style.css" rel="stylesheet">
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">

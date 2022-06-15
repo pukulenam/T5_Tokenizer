@@ -13,16 +13,14 @@ $(document).ready(function () {
             getCookie("varOne"),
             getCookie("varTwo"),
             getCookie("varThree"),
-            getCookie("CbX"),
-            getCookie("CbY"),
-            getCookie("CbYN")
+            getCookie("CbX")
           );
         } else {
-          setAllConf("0", "0", "0", "", "", "");
+          setAllConf("0", "0", "0", "");
         }
       } else {
         tmplS = tmpl.value.split(",");
-        setAllConf(tmplS[0], tmplS[1], tmplS[2], tmplS[3], tmplS[4], tmplS[5]);
+        setAllConf(tmplS[0], tmplS[1], tmplS[2], tmplS[3]);
       }
       getconfstr();
       updallslidertext();
@@ -105,12 +103,10 @@ $(document).ready(function () {
             getCookie("varOne"),
             getCookie("varTwo"),
             getCookie("varThree"),
-            getCookie("CbX"),
-            getCookie("CbY"),
-            getCookie("CbYN")
+            getCookie("CbX")
           );
         } else {
-          setAllConf("0", "0", "0", "", "", "");
+          setAllConf("0", "0", "0", "");
         }
       }
     } else {
@@ -163,8 +159,6 @@ $(document).ready(function () {
     setSliderVal("varTwo", var2);
     setSliderVal("varThree", var3);
     setCbCond("cbX", var4);
-    setCbCond("cbY", var5);
-    setCbCond("cbYN", var6);
   }
 
   function setCookie(cname, cvalue) {
@@ -258,10 +252,36 @@ $(document).ready(function () {
               alertMsg.removeClass(data.alert).html("");
             }, 3000);
             $("#sumText").val(data.sumtext);
+            $("#translateNewsBtn").show().attr("data-id",data.requniqid);
           }
         },
       });
     }
+  });
+
+  $(document).on("click", "#translateNewsBtn", function () {
+    var id = $(this).data("id");
+    $.ajax({
+      url: "action",
+      method: "POST",
+      data: { requniqid: id, action: "trnsumnews" },
+      dataType: "JSON",
+      success: function (data) {
+        if (data.error != "") {
+          alertMsg.addClass(data.alert).html(data.error);
+          setTimeout(function () {
+            alertMsg.removeClass(data.alert).html("");
+          }, 3000);
+        } else {
+          alertMsg.addClass(data.alert).html(data.success);
+          setTimeout(function () {
+            alertMsg.removeClass(data.alert).html("");
+          }, 3000);
+          $("#sumText").val(data.trnslnews);
+          $("#translateNewsBtn").hide().attr("data-id","");
+        }
+      },
+    });
   });
   //End Jquery AJAX Functions
 });

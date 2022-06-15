@@ -1,15 +1,17 @@
 <?php
-
+require '../../vendor/autoload.php';
 include('../assets/config.php');
+
+use Google\Cloud\Translate\V2\TranslateClient;
 
 $object = new Syst;
 
-function getAuthorizationHeader(){
+function getAuthorizationHeader()
+{
     $headers = null;
     if (isset($_SERVER['Authorization'])) {
         $headers = trim($_SERVER["Authorization"]);
-    }
-    else if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
+    } else if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
         $headers = trim($_SERVER["HTTP_AUTHORIZATION"]);
     } elseif (function_exists('apache_request_headers')) {
         $requestHeaders = apache_request_headers();
@@ -21,7 +23,8 @@ function getAuthorizationHeader(){
     return $headers;
 }
 
-function getBearerToken() {
+function getBearerToken()
+{
     $headers = getAuthorizationHeader();
     if (!empty($headers)) {
         if (preg_match('/Bearer\s(\S+)/', $headers, $matches)) {
@@ -41,25 +44,127 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $do_checkapi = $object->checkapi($bearer_token);
         if ($do_checkapi === true) {
 
+            $object->query = "
+				SELECT api_tbl.api_sesid, api_tbl.api_token
+				FROM api_tbl
+				WHERE api_token = '" . $bearer_token . "'
+				";
+
+            $object->execute();
+
+            if ($object->row_count() > 0) {
+                $result = $object->statement_result();
+
+                foreach ($result as $r) {
+                    $api_sesid = $r['api_sesid'];
+                }
+            }
+
             $req_body = file_get_contents('php://input');
             $dec_body = json_decode($req_body, true);
             $data = $dec_body["data"];
             if (isset($data)) {
 
-                $varone = $data['varone'];
-                    $vartwo = $data['vartwo'];
-                    $varthree = $data['varthree'];
-                    $cbx = $data['cbx'];
-                    $cby = $data['cby'];
-                    $cbyn = $data['cbyn'];
-                    $news = $data['news'];
+                $max_length = $data["max_length"];
+                $repetition_penalty = $data["repetition_penalty"];
+                $num_beam = $data["num_beam"];
+                $early_stopping =  $data["early_stopping"];
+                $out_lang = $data['out_lang'];
+                $news = $data['news'];
 
-                $b_msg = 'Request OK';
-                $b_resp = 'Hey Thankyou for sending a request to us :D, Here is your request Details : v1='.$varone.' v2='.$vartwo.' v3='.$varthree.' cbx='.$cbx.' cby='.$cby.' cbyn='.$cbyn.' news='.$news;
-                
-                $status = '1';
-                $msg = $b_msg;
-                $resp = $b_resp;
+                function checkinput($max_length, $repetition_penalty, $num_beam, $early_stopping, $out_lang, $news)
+                {
+                    if (isset($max_length) && isset($repetition_penalty) && isset($num_beam) && isset($news) && isset($out_lang)) {
+                        if (!empty($max_length) && !empty($repetition_penalty) && !empty($num_beam) && !empty($news) && !empty($out_lang)) {
+                            if (($max_length >= 50 && $max_length <= 120) && ($repetition_penalty >= 0 && $repetition_penalty <= 3) && ($num_beam >= 1 && $num_beam <= 10) && ($early_stopping >= 0 && $early_stopping <= 1) && ($out_lang == 'id' || $out_lang == 'en')) {
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        } else {
+                            return false;
+                        }
+                    } else {
+                        return false;
+                    }
+                };
+
+
+                $data = array(
+                    ':max_length' => $max_length,
+                    ':repetition_penalty' => $repetition_penalty,
+                    ':num_beam' => $num_beam,
+                    ':early_stopping' => $early_stopping,
+                    ':news' => $news
+                );
+
+                $summarized_news = '';
+
+                $pydata = json_encode($data);
+                $enc_pydata = base64_encode($pydata);
+                $command = 'python3 predict.py ' . $enc_pydata;
+
+                $gen_req_uniqid = strtoupper(substr(md5(uniqid()), 0, 8));
+
+                if (checkinput($max_length, $repetition_penalty, $num_beam, $early_stopping, $out_lang, $news)) {
+                    $object->query = "
+                    INSERT INTO req_tbl 
+                    (req_sesid, req_uniqid, req_var1, req_var2, req_var3, req_cb1, req_news) 
+                    VALUES 
+                    ('" . $api_sesid . "', '" . $gen_req_uniqid . "', :max_length, :repetition_penalty, :num_beam, :early_stopping, :news)
+                    ";
+
+                    $object->execute($data);
+
+                    $i = 0;
+
+                    do {
+                        $summarized_news = 'Testing OK';
+                        //$summarized_news = shell_exec($command);
+                        $i++;
+                    } while (empty($summarized_news) && $i <= 3);
+
+                    if (!empty($summarized_news)) {
+
+                        $object->query = "
+                        UPDATE req_tbl 
+                        SET req_sum = '" . $summarized_news . "' 
+                        WHERE req_uniqid = '" . $gen_req_uniqid . "'
+                        ";
+
+                        $object->execute();
+
+                        if ($out_lang == 'id') {
+
+                            $translate = new TranslateClient([
+                                'keyFile' => json_decode(file_get_contents('../../g_assets/t5tokenizer-3f80d3cec1eb.json'), true)
+                            ]);
+
+                            $source_body = $summarized_news;
+                            $source_lang = 'en';
+                            $target_lang = 'id';
+
+                            $resultnewstrans = $translate->translate($source_body, [
+                                'source' => $source_lang,
+                                'target' => $target_lang
+                            ]);
+
+                            $b_resp = $resultnewstrans['text'];
+                        } else {
+                            $b_resp = $summarized_news;
+                        }
+
+                        $b_msg = 'Request ' . $gen_req_uniqid . ' Return Success with ' . $i . ' tries';
+
+                        $status = '1';
+                        $msg = $b_msg;
+                        $resp = $b_resp;
+                    }
+                } else {
+                    $status = '0';
+                    $msg = 'Invalid Configuration or Data';
+                    $resp = '';
+                }
             } else {
                 $status = '0';
                 $msg = 'Data not Initialized';
@@ -70,7 +175,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $msg = $do_checkapi;
             $resp = '';
         }
-    }else{
+    } else {
         $status = '0';
         $msg = 'Token not init';
         $resp = '';
@@ -83,7 +188,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     );
     echo json_encode($output);
 
-}else if ($_SERVER['REQUEST_METHOD'] == 'GET'){
+} else if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
     $data = array(
         'varone' => 1.5,
@@ -110,5 +215,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     echo $dt;
 
     echo json_encode($data);
-
 }

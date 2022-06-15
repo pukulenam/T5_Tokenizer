@@ -74,8 +74,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 function checkinput($max_length, $repetition_penalty, $num_beam, $early_stopping, $out_lang, $news)
                 {
-                    if (isset($max_length) && isset($repetition_penalty) && isset($num_beam) && isset($news) && isset($out_lang)) {
-                        if (!empty($max_length) && !empty($repetition_penalty) && !empty($num_beam) && !empty($news) && !empty($out_lang)) {
+                    if (isset($max_length) && isset($repetition_penalty) && isset($num_beam) && isset($early_stopping) && isset($news) && isset($out_lang)) {
+                        if (!empty($max_length) && !empty($repetition_penalty) && !empty($num_beam) && !empty($early_stopping) && !empty($news) && !empty($out_lang)) {
                             if (($max_length >= 50 && $max_length <= 120) && ($repetition_penalty >= 0 && $repetition_penalty <= 3) && ($num_beam >= 1 && $num_beam <= 10) && ($early_stopping >= 0 && $early_stopping <= 1) && ($out_lang == 'id' || $out_lang == 'en')) {
                                 return true;
                             } else {

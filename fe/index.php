@@ -51,7 +51,7 @@ include 'header.php';
                         <div class="d-flex justify-content-center">
                           <div class="gap-2">
                             <div class="form-check form-check-inline">
-                              <input class="form-check-input var tmpl" type="radio" id="t1" name="tmpl" value="128,2.5,7,true">
+                              <input class="form-check-input var tmpl" type="radio" id="t1" name="tmpl" value="128,2,5,true">
                               <label class="form-check-label text-md-start" for="t1">Default</label>
                             </div>
                             <div class="form-check form-check-inline">

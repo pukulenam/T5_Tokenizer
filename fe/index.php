@@ -13,8 +13,8 @@ include 'header.php';
       <div class="row">
         <div class="d-flex justify-content-center py-4">
           <a href="#" class="logo d-flex align-items-center w-auto">
-            <img src="assets/img/logo.png" alt="Logo N">
-            <span class="d-none d-lg-block fs-3">T5</span>
+            <img src="assets/img/puknam.png" height="25" alt="Logo N" >
+            <span class="d-none d-lg-block fs-3">PukulEnam's T5 - Tokenizer</span>
           </a>
         </div><!-- End Logo -->
       </div>
@@ -29,7 +29,7 @@ include 'header.php';
                   <div class="gap-2">
                     <button type="button" id="pasteNewsBtn" class="btn btn-dark btn-sm"><b>Paste</b></i></button>
                     <input type="hidden" name="action" id="tokenizerFormAction" value="newrequest" />
-                    <button type="submit" id="submitBtn" class="btn btn-primary btn-sm"><b>Send</b><i class="bi bi-plus"></i></button>
+                    <button type="submit" id="submitBtn" class="btn btn-danger btn-sm"><b>Send</b><i class="bi bi-plus"></i></button>
                   </div>
                 </div>
                 <div class="col-md-12">

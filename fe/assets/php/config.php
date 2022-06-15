@@ -3,7 +3,6 @@
 setlocale(LC_TIME, 'id_ID.utf8');
 class Syst
 {
-	public $base_url = 'http://localhost/t5_tokenizer/frontend/';
 	public $connect;
 	public $query;
 	public $statement;

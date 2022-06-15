@@ -7,7 +7,7 @@
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link rel="icon" type="image/png" href="/img/puknam.png">
+  <link rel="icon" type="image/png" href="/assets/img/puknam.png">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Google Fonts -->

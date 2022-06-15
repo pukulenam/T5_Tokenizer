@@ -51,7 +51,7 @@ include 'header.php';
                         <div class="d-flex justify-content-center">
                           <div class="gap-2">
                             <div class="form-check form-check-inline">
-                              <input class="form-check-input var tmpl" type="radio" id="t1" name="tmpl" value="120,2.5,7,true">
+                              <input class="form-check-input var tmpl" type="radio" id="t1" name="tmpl" value="128,2.5,7,true">
                               <label class="form-check-label text-md-start" for="t1">Default</label>
                             </div>
                             <div class="form-check form-check-inline">
@@ -63,7 +63,7 @@ include 'header.php';
                               <label class="form-check-label text-md-start" for="t3">Template 3</label>
                             </div>
                             <div class="form-check form-check-inline">
-                              <input class="form-check-input var tmpl" type="radio" id="t4" name="tmpl" value="50,3,3,true">
+                              <input class="form-check-input var tmpl" type="radio" id="t4" name="tmpl" value="133,3,3,true">
                               <label class="form-check-label text-md-start" for="t4">Template 4</label>
                             </div>
                             <div class="form-check form-check-inline">
@@ -77,7 +77,7 @@ include 'header.php';
                               <ul class="list-group">
                                 <li class="list-group-item d-flex align-items-center justify-content-between d-grid gap-1">
                                   <label class="text-sm-start">Max Length</label>
-                                  <input type="range" name="varone" id="varOne" data-target="varOneVal" class="form-range w-75 var var-c var-slide" min="50" max="120" step="1" value="">
+                                  <input type="range" name="varone" id="varOne" data-target="varOneVal" class="form-range w-75 var var-c var-slide" min="50" max="150" step="1" value="">
                                   <span class="badge bg-primary rounded-pill" id="varOneVal">0</span>
                                 </li>
                                 <li class="list-group-item d-flex align-items-center justify-content-between d-grid gap-1">

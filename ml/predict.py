@@ -3,6 +3,7 @@ import os
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
 
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
+from transformers import logging as hf_logging
 import re
 import json
 import sys
@@ -11,40 +12,15 @@ import base64
 x = json.loads(base64.b64decode(sys.argv[1]))
 news = x[':news']
 
-tokenizer = AutoTokenizer.from_pretrained("../ml/model/mt5_small_text_summarization")
-model = AutoModelForSeq2SeqLM.from_pretrained("../ml/model/mt5_small_text_summarization", from_tf=True)
+# Dissable hf debuging info
+hf_logging.set_verbosity_error()
+
+tokenizer = AutoTokenizer.from_pretrained("assamim/t5-small-english")
+model = AutoModelForSeq2SeqLM.from_pretrained("assamim/t5-small-english", from_tf=True)
 
 # Regex for news
 WHITESPACE_HANDLER = lambda k: re.sub('\s+', ' ', re.sub('\n+', ' ', k.strip()))
-
-# ---------- 001 ----------
-
-# input_ids = tokenizer(
-#     [WHITESPACE_HANDLER(news4)],
-#     return_tensors="pt",
-#     padding="max_length",
-#     truncation=True,
-#     max_length=512
-# )["input_ids"]
-
-# output_ids = model.generate(
-#     input_ids=input_ids,
-#     max_length=50,
-#     no_repeat_ngram_size=2,
-#     num_beams=5
-# )[0]
-
-# summary = tokenizer.decode(
-#     output_ids,
-#     skip_special_tokens=True,
-#     clean_up_tokenization_spaces=False
-# )
-
-# print(summary)
-
-# ---------- 002 ----------
-
-input_ids = tokenizer.encode(WHITESPACE_HANDLER(news), return_tensors='pt')
+input_ids = tokenizer.encode(WHITESPACE_HANDLER(news2), return_tensors='pt')
 summary_ids = model.generate(input_ids,
             min_length=20,
             max_length=200,
@@ -58,6 +34,5 @@ summary_ids = model.generate(input_ids,
             temperature = 0.8,
             top_k = 50,
             top_p = 0.95)
-
 summary_text = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
-print("Intinya... "+summary_text)
+print(summary_text)

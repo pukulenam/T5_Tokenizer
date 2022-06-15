@@ -159,7 +159,7 @@ if (isset($_POST["action"])) {
 
 			$pydata = json_encode($data);
 			$enc_pydata = base64_encode($pydata);
-			$command = 'python3 predict.py ' . $enc_pydata;
+			$command = '/data/www/t5/t5venv/bin/python3 /data/www/t5/T5_Tokenizer/ml/predict.py '.$enc_pydata;
 
 			if (checkinput($max_length, $repetition_penalty, $num_beam, $news)) {
 				$object->query = "

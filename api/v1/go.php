@@ -102,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 $pydata = json_encode($data);
                 $enc_pydata = base64_encode($pydata);
-                $command = 'python3 predict.py ' . $enc_pydata;
+                $command = '/data/www/t5/t5venv/bin/python3 /data/www/t5/T5_Tokenizer/ml/predict.py '.$enc_pydata;
 
                 $gen_req_uniqid = strtoupper(substr(md5(uniqid()), 0, 8));
 

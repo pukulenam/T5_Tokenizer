@@ -10,9 +10,11 @@ import sys
 import base64
 
 x = json.loads(base64.b64decode(sys.argv[1]))
-news = x[':news']
-early_stopping = True if x[':early_stopping'] == 1 else False
-
+v_max_length = x[':max_length']
+v_repetition_penalty = x[':repetition_penalty']
+v_num_beam = x[':num_beam']
+v_early_stopping = True if x[':early_stopping'] == 1 else False
+v_news = x[':news']
 
 # Dissable hf debuging info
 hf_logging.set_verbosity_error()
@@ -22,14 +24,14 @@ model = AutoModelForSeq2SeqLM.from_pretrained("assamim/t5-small-english", from_t
 
 # Regex for news
 WHITESPACE_HANDLER = lambda k: re.sub('\s+', ' ', re.sub('\n+', ' ', k.strip()))
-input_ids = tokenizer.encode(WHITESPACE_HANDLER(news), return_tensors='pt')
+input_ids = tokenizer.encode(WHITESPACE_HANDLER(v_news), return_tensors='pt')
 summary_ids = model.generate(input_ids,
             min_length=20,
-            max_length=x[':max_length'],
-            num_beams=x[':num_beam'],
-            repetition_penalty=float(x[':repetition_penalty']),
+            max_length=v_max_length,
+            num_beams=v_num_beam,
+            repetition_penalty=float(v_repetition_penalty),
             length_penalty=1.0,
-            early_stopping=early_stopping,
+            early_stopping=v_early_stopping,
             no_repeat_ngram_size=2,
             use_cache=True,
             do_sample = True,

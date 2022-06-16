@@ -8,7 +8,7 @@
 
   <!-- Favicons -->
   <link rel="icon" type="image/png" href="assets/img/puknam.png">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link href="assets/img/puknam.png" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
   <link href="assets/vendorm/google-fonts/google-fonts.css" rel="stylesheet">

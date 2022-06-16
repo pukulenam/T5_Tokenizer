@@ -86,23 +86,6 @@ if (isset($_POST["action"])) {
 
 		if (isset($_SESSION['sesid'])) {
 
-			$gen_req_uniqid = strtoupper(substr(md5(uniqid()), 0, 8));
-
-			$logdata = 'New Request : ' . $gen_req_uniqid;
-
-			$object->makelog($logdata);
-
-			if (!isset($_POST["cbx"])) {
-				$cbx = 0;
-			} else {
-				$cbx = $_POST["cbx"];
-			}
-
-			$max_length = $_POST["varone"];
-			$repetition_penalty = $_POST["vartwo"];
-			$num_beam = $_POST["varthree"];
-			$news = $object->clean_input($_POST["lt"]);
-
 			function checkinput($max_length, $repetition_penalty, $num_beam, $news)
 			{
 				if (isset($max_length) && isset($repetition_penalty) && isset($num_beam) && isset($news)) {
@@ -120,63 +103,52 @@ if (isset($_POST["action"])) {
 				}
 			};
 
+			if (!isset($_POST["cbx"])) {
+				$cbx = 0;
+			} else {
+				$cbx = $_POST["cbx"];
+			}
+
+			$gen_req_uniqid = strtoupper(substr(md5(uniqid()), 0, 8));
+
+			$logdata = 'New Request : ' . $gen_req_uniqid;
+
+			$object->makelog($logdata);
+
+			$max_length = $_POST["varone"];
+			$repetition_penalty = $_POST["vartwo"];
+			$num_beam = $_POST["varthree"];
+			$early_stopping = $cbx;
+			$news = $object->clean_input($_POST["lt"]);
+
 			$data = array(
-				':max_length' => $_POST["varone"],
-				':repetition_penalty' => $_POST["vartwo"],
-				':num_beam' => $_POST["varthree"],
-				':early_stopping' => $cbx,
+				':max_length' => $max_length,
+				':repetition_penalty' => $repetition_penalty,
+				':num_beam' => $num_beam,
+				':early_stopping' => $early_stopping,
 				':news' => $news
 			);
 
-			$summarized_news = '';
-
-			function huggingface($news)
-			{
-				$url = "https://api-inference.huggingface.co/models/csebuetnlp/mT5_multilingual_XLSum";
-
-				$curl = curl_init($url);
-				curl_setopt($curl, CURLOPT_URL, $url);
-				curl_setopt($curl, CURLOPT_POST, true);
-				curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-
-				$headers = array(
-					"Authorization: Bearer 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",
-					"Content-Type: application/json",
-				);
-				curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-
-				$data = '{"inputs" : "' . $news . '"}';
-
-				curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-
-				$resp = json_decode(curl_exec($curl), true);
-				curl_close($curl);
-				foreach ($resp as $v) {
-					$dec_v = $v['summary_text'];
-				}
-				return $dec_v;
-			};
-
 			$pydata = json_encode($data);
 			$enc_pydata = base64_encode($pydata);
-			$command = '/data/www/t5/t5venv/bin/python3 /data/www/t5/T5_Tokenizer/ml/predict.py '.$enc_pydata;
+			$command = '/data/www/t5/t5venv/bin/python3 predict.py '.$enc_pydata;
 
 			if (checkinput($max_length, $repetition_penalty, $num_beam, $news)) {
 				$object->query = "
-			INSERT INTO req_tbl 
-			(req_sesid, req_uniqid, req_var1, req_var2, req_var3, req_cb1, req_news) 
-			VALUES 
-			('" . $_SESSION['sesid'] . "', '" . $gen_req_uniqid . "', :max_length, :repetition_penalty, :num_beam, :early_stopping, :news)
-			";
+				INSERT INTO req_tbl 
+				(req_sesid, req_uniqid, req_var1, req_var2, req_var3, req_cb1, req_news) 
+				VALUES 
+				('" . $_SESSION['sesid'] . "', '" . $gen_req_uniqid . "', :max_length, :repetition_penalty, :num_beam, :early_stopping, :news)
+				";
 
 				$object->execute($data);
 
 				$i = 0;
+				$summarized_news = '';
 
 				do {
 					$summarized_news = 'Testing OK';
-					//$summarized_news = huggingface($data[':news']);
-					//$summarized_news = exec($command);
+					$summarized_news = shell_exec($command);
 					$i++;
 				} while (empty($summarized_news) && $i <= 3);
 
@@ -196,6 +168,8 @@ if (isset($_POST["action"])) {
 
 					$output = array(
 						'respact'	=> $resp_act,
+						'r_json'	=> $pydata,
+						'r_encbsix' => $enc_pydata,
 						'sumtext'	=>  $summarized_news,
 						'requniqid' => $gen_req_uniqid,
 						'alert'		=>  $alert,
@@ -207,6 +181,8 @@ if (isset($_POST["action"])) {
 					$alert = 'alert alert-danger';
 					$error = 'Request ' . $gen_req_uniqid . ' Returning Blank After ' . $i . ' tries. Please Try Again.';
 					$output = array(
+						'r_json'	=> $pydata,
+						'r_encbsix' => $enc_pydata,
 						'respact'	=> $resp_act,
 						'alert'		=>  $alert,
 						'error'		=>	$error,

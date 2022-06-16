@@ -65,10 +65,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $data = $dec_body["data"];
             if (isset($data)) {
 
-                $max_length = $data["max_length"];
-                $repetition_penalty = $data["repetition_penalty"];
-                $num_beam = $data["num_beam"];
-                $early_stopping =  $data["early_stopping"];
+                $max_length = $data["max_length"] + 0;
+                $repetition_penalty = $data["repetition_penalty"] + 0;
+                $num_beam = $data["num_beam"] + 0;
+                $early_stopping =  $data["early_stopping"] + 0;
                 $out_lang = $data['out_lang'];
                 $news = $data['news'];
 

@@ -147,7 +147,6 @@ if (isset($_POST["action"])) {
 				$summarized_news = '';
 
 				do {
-					$summarized_news = 'Testing OK';
 					$summarized_news = shell_exec($command);
 					$i++;
 				} while (empty($summarized_news) && $i <= 3);

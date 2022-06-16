@@ -183,6 +183,7 @@ if (isset($_POST["action"])) {
 						'r_json'	=> $pydata,
 						'r_encbsix' => $enc_pydata,
 						'respact'	=> $resp_act,
+						'sumtext'	=>  $summarized_news,
 						'alert'		=>  $alert,
 						'error'		=>	$error,
 						'success'	=>	$success

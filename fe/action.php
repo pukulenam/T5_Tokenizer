@@ -115,11 +115,11 @@ if (isset($_POST["action"])) {
 
 			$object->makelog($logdata);
 
-			$max_length = $_POST["varone"];
-			$repetition_penalty = $_POST["vartwo"];
-			$num_beam = $_POST["varthree"];
-			$early_stopping = $cbx;
-			$news = $object->clean_input($_POST["lt"]);
+			$max_length = $_POST["varone"] + 0;
+			$repetition_penalty = $_POST["vartwo"] + 0;
+			$num_beam = $_POST["varthree"] + 0;
+			$early_stopping = $cbx + 0;
+			$news = $object->$_POST["lt"];
 
 			$data = array(
 				':max_length' => $max_length,

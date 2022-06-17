@@ -29,5 +29,4 @@ data struct example:
   <br>
 </p>
 <p>API documentation : &nbsp;</p><a href="https://github.com/pukulenam/T5_Tokenizer/tree/dev/api">Dev branch, T5_Tokenizer</a>
-<br><br
-<p>API test : &nbsp;</p><a href="https://reqbin.com/f4fcxuut">Reqbin</a>
+<br><b>

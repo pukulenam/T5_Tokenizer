@@ -1,11 +1,11 @@
 <h1>Main Branch for Web</h1>
 <h2>Front end</h2>
-<p>Preview : &nbsp;</p><a href="https://t5-vm.zxnow.site/T5_Tokenizer/fe/">https://t5-vm.zxnow.site/T5_Tokenizer/fe/</a><br><br>
+<p>Preview : &nbsp;</p><a href="https://t5.zxnow.site/fe">https://t5.zxnow.site/fe/</a><br><br>
 <p>Dev Branch (currently running) : &nbsp;</p><a href="https://github.com/pukulenam/T5_Tokenizer/tree/dev">https://github.com/pukulenam/T5_Tokenizer/tree/dev</a>
 <br>
 <h2>API</h2>
 <p>
-url : https://t5-vm.zxnow.site/T5_Tokenizer/api/v1/go
+url : https://t5.zxnow.site/api/v1/go
 
 method : POST | application/json
 Authorization : Bearer Token
@@ -18,19 +18,16 @@ data struct example:
   JSON:
   <pre>
   {"data":{
-      "varone": 1.5,
-      "vartwo": 3,
-      "varthree": 4.5,
-      "cby": 1,
-      "cbx": 0,
-      "cbyn": 0,
-      "news": "Hello Were from blablabla"
-  }}
+    "max_length": 79,
+    "repetition_penalty": 3,
+    "num_beam": 5,
+    "early_stopping": 1,
+    "out_lang":"id",
+    "news": "Hai dari ini kita bisa ambil kesimpulan"
+}}
   </pre>
   <br>
 </p>
 <p>API documentation : &nbsp;</p><a href="https://github.com/pukulenam/T5_Tokenizer/tree/dev/api">Dev branch, T5_Tokenizer</a>
-<br><br>
-<p>API documentation : &nbsp;</p><a href="https://github.com/pukulenam/T5_Tokenizer/tree/dev/api">Dev branch, T5_Tokenizer</a>
-<br><br>
+<br><br
 <p>API test : &nbsp;</p><a href="https://reqbin.com/f4fcxuut">Reqbin</a>

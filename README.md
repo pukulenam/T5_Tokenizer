@@ -31,7 +31,6 @@ data struct example:
 </p>
 <p>API documentation : &nbsp;</p><a href="https://github.com/pukulenam/T5_Tokenizer/tree/dev/api">Dev branch, T5_Tokenizer</a>
 <br><br>
-<p>API test : &nbsp;</p><a href="https://colab.research.google.com/drive/1kP965KP5uezbMXMFBsZlT7I_AimzjYkJ">via Python</a>
 <p>API documentation : &nbsp;</p><a href="https://github.com/pukulenam/T5_Tokenizer/tree/dev/api">Dev branch, T5_Tokenizer</a>
 <br><br>
 <p>API test : &nbsp;</p><a href="https://reqbin.com/f4fcxuut">Reqbin</a>

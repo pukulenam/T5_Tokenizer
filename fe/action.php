@@ -167,8 +167,6 @@ if (isset($_POST["action"])) {
 
 					$output = array(
 						'respact'	=> $resp_act,
-						'r_json'	=> $pydata,
-						'r_encbsix' => $enc_pydata,
 						'sumtext'	=>  $summarized_news,
 						'requniqid' => $gen_req_uniqid,
 						'alert'		=>  $alert,
@@ -180,10 +178,7 @@ if (isset($_POST["action"])) {
 					$alert = 'alert alert-danger';
 					$error = 'Request ' . $gen_req_uniqid . ' Returning Blank After ' . $i . ' tries. Please Try Again.';
 					$output = array(
-						'r_json'	=> $pydata,
-						'r_encbsix' => $enc_pydata,
 						'respact'	=> $resp_act,
-						'sumtext'	=>  $summarized_news,
 						'alert'		=>  $alert,
 						'error'		=>	$error,
 						'success'	=>	$success
